@@ -3,273 +3,411 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaUP - Acesso</title>
+    <title>NovaUP - Autenticação</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-neon: #00f5ff;
-            --secondary-neon: #ff00ff;
-            --accent-neon: #00ff88;
-            --deep-space: #050510;
-            --cosmic-purple: #1a1a2e;
-            --nebula-blue: #16213e;
-            --stardust: #0f3460;
-            --text-glow: #e2e2f2;
-            --text-dim: #8b8ba8;
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --transition-elastic: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --primary-color: #5865F2;
+            --primary-dark: #4752C4;
+            --primary-light: #7983F5;
+            --dark-bg: #313338;
+            --darker-bg: #2B2D31;
+            --darkest-bg: #1E1F22;
+            --text-primary: #F2F3F5;
+            --text-secondary: #B5BAC1;
+            --success: #3BA55D;
+            --error: #ED4245;
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            --transition: all 0.3s ease;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'SF Pro Display', 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, var(--deep-space) 0%, var(--cosmic-purple) 50%, var(--nebula-blue) 100%);
-            color: var(--text-glow);
-            min-height: 100vh;
+            background: linear-gradient(135deg, var(--darkest-bg) 0%, var(--darker-bg) 100%);
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             padding: 20px;
+            color: var(--text-primary);
         }
 
         .auth-container {
             width: 100%;
-            max-width: 440px;
-            animation: cosmicEntrance 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            max-width: 480px;
+            animation: fadeIn 0.8s ease;
         }
 
-        @keyframes cosmicEntrance {
-            0% { opacity: 0; transform: scale(0.8) translateY(50px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .quantum-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: var(--glass-shadow);
-            padding: 40px;
+        .auth-card {
+            background-color: var(--dark-bg);
+            border-radius: 8px;
+            padding: 32px;
+            box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
         }
 
-        .portal-logo {
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--success));
+        }
+
+        .logo {
             text-align: center;
-            margin-bottom: 32px;
+            margin-bottom: 20px;
         }
 
-        .portal-logo i {
-            font-size: 64px;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, var(--primary-neon), var(--secondary-neon));
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
-
-        .portal-logo h1 {
-            font-weight: 800;
-            font-size: 32px;
+            color: transparent;
             margin-bottom: 8px;
-            background: linear-gradient(135deg, var(--text-glow), var(--primary-neon));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
-        .quantum-tabs {
+        .logo p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .auth-tabs {
             display: flex;
-            margin-bottom: 32px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50px;
-            padding: 6px;
+            margin-bottom: 24px;
+            background-color: var(--darker-bg);
+            border-radius: 4px;
+            padding: 4px;
         }
 
-        .quantum-tab {
+        .auth-tab {
             flex: 1;
-            padding: 14px;
+            padding: 10px;
             text-align: center;
             cursor: pointer;
-            border-radius: 50px;
-            transition: var(--transition-elastic);
-            font-weight: 600;
+            border-radius: 4px;
+            transition: var(--transition);
+            font-weight: 500;
         }
 
-        .quantum-tab.active {
-            background: linear-gradient(135deg, var(--primary-neon), var(--accent-neon));
-            color: var(--deep-space);
+        .auth-tab.active {
+            background-color: var(--primary-color);
+            color: white;
         }
 
-        .quantum-form {
+        .auth-form {
             display: none;
         }
 
-        .quantum-form.active {
+        .auth-form.active {
             display: block;
-            animation: quantumReveal 0.6s ease;
+            animation: slideIn 0.4s ease;
         }
 
-        @keyframes quantumReveal {
-            from { opacity: 0; transform: translateX(30px); }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
             to { opacity: 1; transform: translateX(0); }
         }
 
-        .quantum-field {
-            margin-bottom: 24px;
-        }
-
-        .quantum-field label {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-dim);
-        }
-
-        .input-wormhole {
+        .form-group {
+            margin-bottom: 20px;
             position: relative;
         }
 
-        .input-wormhole i {
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
             position: absolute;
-            left: 18px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-dim);
-            transition: var(--transition-elastic);
+            color: var(--text-secondary);
+            transition: var(--transition);
         }
 
-        .input-wormhole input {
+        .input-with-icon input {
             width: 100%;
-            padding: 16px 20px 16px 52px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            color: var(--text-glow);
+            padding: 12px 16px 12px 44px;
+            background-color: var(--darkest-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: var(--text-primary);
             font-size: 16px;
-            transition: var(--transition-elastic);
+            transition: var(--transition);
         }
 
-        .input-wormhole input:focus {
+        .input-with-icon input:focus {
             outline: none;
-            border-color: var(--primary-neon);
-            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.3);
+        }
+
+        .input-with-icon input:focus + i {
+            color: var(--primary-color);
         }
 
         .password-toggle {
             position: absolute;
-            right: 18px;
+            right: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-dim);
+            color: var(--text-secondary);
             cursor: pointer;
+            transition: var(--transition);
         }
 
-        .quantum-btn {
-            width: 100%;
-            padding: 18px;
-            border: none;
-            border-radius: 16px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition-elastic);
-            background: linear-gradient(135deg, var(--primary-neon), var(--accent-neon));
-            color: var(--deep-space);
+        .password-toggle:hover {
+            color: var(--text-primary);
         }
 
-        .quantum-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0, 245, 255, 0.6);
-        }
-
-        .quantum-footer {
-            text-align: center;
-            margin-top: 24px;
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
             font-size: 14px;
-            color: var(--text-dim);
         }
 
-        .quantum-footer a {
-            color: var(--primary-neon);
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember-me input {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary-color);
+        }
+
+        .forgot-password {
+            color: var(--primary-light);
             text-decoration: none;
-            font-weight: 600;
+            transition: var(--transition);
         }
 
-        .quantum-message {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 24px;
+        .forgot-password:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(88, 101, 242, 0.3);
+        }
+
+        .btn-google {
+            background-color: white;
+            color: #333;
+            margin-top: 12px;
+        }
+
+        .btn-google:hover {
+            background-color: #f5f5f5;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .divider span {
+            padding: 0 16px;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .auth-footer a {
+            color: var(--primary-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .auth-footer a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background-color: rgba(237, 66, 69, 0.1);
+            border: 1px solid rgba(237, 66, 69, 0.3);
+            color: var(--error);
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        .success-message {
+            background-color: rgba(59, 165, 93, 0.1);
+            border: 1px solid rgba(59, 165, 93, 0.3);
+            color: var(--success);
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
             font-size: 14px;
             display: none;
         }
 
-        .message-success {
-            background: rgba(0, 255, 149, 0.1);
-            border-color: rgba(0, 255, 149, 0.3);
-            color: #00ff95;
-        }
-
-        .message-error {
-            background: rgba(255, 42, 109, 0.1);
-            border-color: rgba(255, 42, 109, 0.3);
-            color: #ff2a6d;
-        }
-
-        .loading-quantum {
+        .loading {
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 3px solid rgba(5, 5, 16, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            border-top-color: var(--deep-space);
-            animation: quantumLoad 1s ease-in-out infinite;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
         }
 
-        @keyframes quantumLoad {
+        @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(88, 101, 242, 0.2);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 24px;
+            }
+            
+            .form-options {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="particles" id="particles"></div>
+    
     <div class="auth-container">
-        <div class="quantum-card">
-            <div class="portal-logo">
-                <i class="fas fa-atom"></i>
+        <div class="auth-card">
+            <div class="logo">
                 <h1>NovaUP</h1>
-                <p>Acesse o sistema quântico</p>
+                <p>Conecte-se com sua comunidade</p>
             </div>
             
-            <div class="quantum-tabs">
-                <div class="quantum-tab active" data-tab="login">Entrar</div>
-                <div class="quantum-tab" data-tab="register">Registrar</div>
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="login">Entrar</div>
+                <div class="auth-tab" data-tab="register">Registrar</div>
             </div>
             
-            <div class="quantum-message" id="quantumMessage"></div>
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
             
             <!-- Login Form -->
-            <form class="quantum-form active" id="loginForm">
-                <div class="quantum-field">
+            <form class="auth-form active" id="loginForm">
+                <div class="form-group">
                     <label for="loginEmail">E-mail</label>
-                    <div class="input-wormhole">
+                    <div class="input-with-icon">
                         <input type="email" id="loginEmail" placeholder="seu@email.com" required>
                         <i class="fas fa-envelope"></i>
                     </div>
                 </div>
                 
-                <div class="quantum-field">
+                <div class="form-group">
                     <label for="loginPassword">Senha</label>
-                    <div class="input-wormhole">
+                    <div class="input-with-icon">
                         <input type="password" id="loginPassword" placeholder="Sua senha" required>
                         <i class="fas fa-lock"></i>
                         <span class="password-toggle" id="loginPasswordToggle">
@@ -278,37 +416,54 @@
                     </div>
                 </div>
                 
-                <button type="submit" class="quantum-btn" id="loginBtn">
-                    <span id="loginText">Acessar Portal</span>
+                <div class="form-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Lembrar de mim</label>
+                    </div>
+                    <a href="#" class="forgot-password">Esqueceu a senha?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="loginButton">
+                    <span>Entrar</span>
                 </button>
                 
-                <div class="quantum-footer">
-                    Não tem uma conta? <a href="#" id="registerLink">Crie um portal</a>
+                <div class="divider">
+                    <span>ou</span>
+                </div>
+                
+                <button type="button" class="btn btn-google" id="googleLoginButton">
+                    <i class="fab fa-google"></i>
+                    <span>Entrar com Google</span>
+                </button>
+                
+                <div class="auth-footer">
+                    Precisa de uma conta? <a href="#" id="registerLink">Registre-se</a>
                 </div>
             </form>
             
             <!-- Register Form -->
-            <form class="quantum-form" id="registerForm">
-                <div class="quantum-field">
-                    <label for="registerName">Nome</label>
-                    <div class="input-wormhole">
-                        <input type="text" id="registerName" placeholder="Seu nome" required>
+            <form class="auth-form" id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Nome de usuário</label>
+                    <div class="input-with-icon">
+                        <input type="text" id="registerName" placeholder="Como quer ser chamado?" required>
                         <i class="fas fa-user"></i>
                     </div>
                 </div>
                 
-                <div class="quantum-field">
+                <div class="form-group">
                     <label for="registerEmail">E-mail</label>
-                    <div class="input-wormhole">
+                    <div class="input-with-icon">
                         <input type="email" id="registerEmail" placeholder="seu@email.com" required>
                         <i class="fas fa-envelope"></i>
                     </div>
                 </div>
                 
-                <div class="quantum-field">
+                <div class="form-group">
                     <label for="registerPassword">Senha</label>
-                    <div class="input-wormhole">
-                        <input type="password" id="registerPassword" placeholder="Crie uma senha" required>
+                    <div class="input-with-icon">
+                        <input type="password" id="registerPassword" placeholder="Crie uma senha forte" required>
                         <i class="fas fa-lock"></i>
                         <span class="password-toggle" id="registerPasswordToggle">
                             <i class="fas fa-eye"></i>
@@ -316,10 +471,10 @@
                     </div>
                 </div>
                 
-                <div class="quantum-field">
+                <div class="form-group">
                     <label for="registerConfirmPassword">Confirmar Senha</label>
-                    <div class="input-wormhole">
-                        <input type="password" id="registerConfirmPassword" placeholder="Digite novamente" required>
+                    <div class="input-with-icon">
+                        <input type="password" id="registerConfirmPassword" placeholder="Digite a senha novamente" required>
                         <i class="fas fa-lock"></i>
                         <span class="password-toggle" id="registerConfirmPasswordToggle">
                             <i class="fas fa-eye"></i>
@@ -327,156 +482,345 @@
                     </div>
                 </div>
                 
-                <button type="submit" class="quantum-btn" id="registerBtn">
-                    <span id="registerText">Criar Conta</span>
+                <button type="submit" class="btn btn-primary" id="registerButton">
+                    <span>Continuar</span>
                 </button>
                 
-                <div class="quantum-footer">
-                    Já tem uma conta? <a href="#" id="loginLink">Acesse o portal</a>
+                <div class="divider">
+                    <span>ou</span>
+                </div>
+                
+                <button type="button" class="btn btn-google" id="googleRegisterButton">
+                    <i class="fab fa-google"></i>
+                    <span>Registrar com Google</span>
+                </button>
+                
+                <div class="auth-footer">
+                    Já tem uma conta? <a href="#" id="loginLink">Conecte-se</a>
                 </div>
             </form>
         </div>
     </div>
 
-    <script>
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, 
+            updateProfile,
+            GoogleAuthProvider, 
+            signInWithPopup,
+            setPersistence,
+            browserSessionPersistence,
+            browserLocalPersistence
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA5ohHJi-9cOGOM_2pqhDJbFDUtf_X3VCg",
+            authDomain: "nova-up-22710.firebaseapp.com",
+            projectId: "nova-up-22710",
+            storageBucket: "nova-up-22710.firebasestorage.app",
+            messagingSenderId: "240064659163",
+            appId: "1:240064659163:web:54c96e8af0ce42754016fe",
+            measurementId: "G-WJ20TVHYGG"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        // Configure Google Provider
+        const googleProvider = new GoogleAuthProvider();
+        googleProvider.addScope('email');
+        googleProvider.addScope('profile');
+        googleProvider.setCustomParameters({
+            prompt: 'select_account'
+        });
+
         // DOM Elements
         const loginForm = document.getElementById('loginForm');
         const registerForm = document.getElementById('registerForm');
-        const loginBtn = document.getElementById('loginBtn');
-        const registerBtn = document.getElementById('registerBtn');
-        const loginText = document.getElementById('loginText');
-        const registerText = document.getElementById('registerText');
-        const quantumMessage = document.getElementById('quantumMessage');
-        const quantumTabs = document.querySelectorAll('.quantum-tab');
+        const loginButton = document.getElementById('loginButton');
+        const registerButton = document.getElementById('registerButton');
+        const loginPasswordToggle = document.getElementById('loginPasswordToggle');
+        const registerPasswordToggle = document.getElementById('registerPasswordToggle');
+        const registerConfirmPasswordToggle = document.getElementById('registerConfirmPasswordToggle');
+        const loginPassword = document.getElementById('loginPassword');
+        const registerPassword = document.getElementById('registerPassword');
+        const registerConfirmPassword = document.getElementById('registerConfirmPassword');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const authTabs = document.querySelectorAll('.auth-tab');
         const loginLink = document.getElementById('loginLink');
         const registerLink = document.getElementById('registerLink');
+        const googleLoginButton = document.getElementById('googleLoginButton');
+        const googleRegisterButton = document.getElementById('googleRegisterButton');
+        const rememberMe = document.getElementById('rememberMe');
 
-        // Switch between forms
-        function switchForm(formType) {
-            quantumTabs.forEach(tab => {
-                tab.classList.toggle('active', tab.dataset.tab === formType);
-            });
+        // Create background particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
             
-            loginForm.classList.toggle('active', formType === 'login');
-            registerForm.classList.toggle('active', formType === 'register');
-            clearMessage();
-        }
-
-        // Toggle password visibility
-        function setupPasswordToggles() {
-            const toggles = [
-                { toggle: 'loginPasswordToggle', input: 'loginPassword' },
-                { toggle: 'registerPasswordToggle', input: 'registerPassword' },
-                { toggle: 'registerConfirmPasswordToggle', input: 'registerConfirmPassword' }
-            ];
-
-            toggles.forEach(({ toggle, input }) => {
-                const toggleEl = document.getElementById(toggle);
-                const inputEl = document.getElementById(input);
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
                 
-                toggleEl.addEventListener('click', () => {
-                    const icon = toggleEl.querySelector('i');
-                    if (inputEl.type === 'password') {
-                        inputEl.type = 'text';
-                        icon.classList.replace('fa-eye', 'fa-eye-slash');
-                    } else {
-                        inputEl.type = 'password';
-                        icon.classList.replace('fa-eye-slash', 'fa-eye');
-                    }
-                });
-            });
-        }
-
-        // Show message
-        function showMessage(message, type = 'error') {
-            quantumMessage.textContent = message;
-            quantumMessage.className = `quantum-message message-${type}`;
-            quantumMessage.style.display = 'block';
-        }
-
-        // Clear message
-        function clearMessage() {
-            quantumMessage.style.display = 'none';
-        }
-
-        // Set loading state
-        function setLoading(button, textElement, isLoading) {
-            if (isLoading) {
-                button.disabled = true;
-                textElement.innerHTML = '<div class="loading-quantum"></div>';
-            } else {
-                button.disabled = false;
-                textElement.textContent = button.id === 'loginBtn' ? 'Acessar Portal' : 'Criar Conta';
+                // Random size and position
+                const size = Math.random() * 60 + 10;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 10 + 15;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}vw`;
+                particle.style.bottom = `-${size}px`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                particlesContainer.appendChild(particle);
             }
         }
 
-        // Simulate authentication (replace with Firebase)
-        function simulateAuth(action, data) {
-            return new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    // Simulate successful auth
-                    if (data.email && data.password) {
-                        resolve({ success: true, user: data });
-                    } else {
-                        reject(new Error('Credenciais inválidas'));
-                    }
-                }, 1500);
+        // Switch between login and register forms
+        function switchForm(formType) {
+            // Update tabs
+            authTabs.forEach(tab => {
+                if (tab.dataset.tab === formType) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
             });
+            
+            // Update forms
+            if (formType === 'login') {
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+            } else {
+                loginForm.classList.remove('active');
+                registerForm.classList.add('active');
+            }
+            
+            // Clear messages
+            clearMessages();
+        }
+
+        // Toggle password visibility
+        function togglePasswordVisibility(inputElement, toggleElement) {
+            const icon = toggleElement.querySelector('i');
+            
+            if (inputElement.type === 'password') {
+                inputElement.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                inputElement.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+        }
+
+        // Clear messages
+        function clearMessages() {
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+        }
+
+        // Set button loading state
+        function setButtonLoading(button, isLoading) {
+            if (isLoading) {
+                button.disabled = true;
+                button.innerHTML = '<div class="loading"></div>';
+            } else {
+                button.disabled = false;
+                if (button.id === 'loginButton') {
+                    button.innerHTML = '<span>Entrar</span>';
+                } else {
+                    button.innerHTML = '<span>Continuar</span>';
+                }
+            }
         }
 
         // Handle login
         async function handleLogin(email, password) {
             try {
-                setLoading(loginBtn, loginText, true);
-                await simulateAuth('login', { email, password });
+                setButtonLoading(loginButton, true);
                 
-                showMessage('Login realizado! Redirecionando...', 'success');
+                // Set persistence based on remember me checkbox
+                const persistence = rememberMe.checked ? 
+                    browserLocalPersistence : browserSessionPersistence;
                 
-                // Redirect to main page
+                await setPersistence(auth, persistence);
+                
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                showSuccess('Login realizado com sucesso!');
+                
+                // Redirect to app after successful login
                 setTimeout(() => {
-                    window.location.href = 'main.html';
-                }, 2000);
+                    window.location.href = 'app.html';
+                }, 1500);
                 
             } catch (error) {
-                showMessage('Erro no login: ' + error.message, 'error');
+                let errorMsg = 'Erro ao fazer login. Tente novamente.';
+                
+                switch (error.code) {
+                    case 'auth/invalid-email':
+                        errorMsg = 'E-mail inválido.';
+                        break;
+                    case 'auth/user-disabled':
+                        errorMsg = 'Esta conta foi desativada.';
+                        break;
+                    case 'auth/user-not-found':
+                        errorMsg = 'Nenhuma conta encontrada com este e-mail.';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMsg = 'Senha incorreta.';
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMsg = 'Muitas tentativas de login. Tente novamente mais tarde.';
+                        break;
+                    case 'auth/network-request-failed':
+                        errorMsg = 'Erro de conexão. Verifique sua internet.';
+                        break;
+                }
+                
+                showError(errorMsg);
             } finally {
-                setLoading(loginBtn, loginText, false);
+                setButtonLoading(loginButton, false);
             }
         }
 
         // Handle registration
-        async function handleRegistration(name, email, password, confirmPassword) {
+        async function handleRegistration(name, email, password) {
             try {
-                if (password !== confirmPassword) {
-                    throw new Error('As senhas não coincidem');
-                }
+                setButtonLoading(registerButton, true);
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 
-                if (password.length < 6) {
-                    throw new Error('A senha deve ter pelo menos 6 caracteres');
-                }
-
-                setLoading(registerBtn, registerText, true);
-                await simulateAuth('register', { name, email, password });
+                // Update profile with display name
+                await updateProfile(userCredential.user, {
+                    displayName: name
+                });
                 
-                showMessage('Conta criada! Redirecionando...', 'success');
+                showSuccess('Conta criada com sucesso! Redirecionando...');
                 
-                // Redirect to main page
+                // Redirect to app after successful registration
                 setTimeout(() => {
-                    window.location.href = 'main.html';
-                }, 2000);
+                    window.location.href = 'app.html';
+                }, 1500);
                 
             } catch (error) {
-                showMessage('Erro no registro: ' + error.message, 'error');
+                let errorMsg = 'Erro ao criar conta. Tente novamente.';
+                
+                switch (error.code) {
+                    case 'auth/email-already-in-use':
+                        errorMsg = 'Este e-mail já está em uso.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMsg = 'E-mail inválido.';
+                        break;
+                    case 'auth/operation-not-allowed':
+                        errorMsg = 'Operação não permitida.';
+                        break;
+                    case 'auth/weak-password':
+                        errorMsg = 'A senha é muito fraca. Use pelo menos 6 caracteres.';
+                        break;
+                    case 'auth/network-request-failed':
+                        errorMsg = 'Erro de conexão. Verifique sua internet.';
+                        break;
+                }
+                
+                showError(errorMsg);
             } finally {
-                setLoading(registerBtn, registerText, false);
+                setButtonLoading(registerButton, false);
             }
         }
 
-        // Event Listeners
-        quantumTabs.forEach(tab => {
-            tab.addEventListener('click', () => switchForm(tab.dataset.tab));
+        // Handle Google authentication
+        async function handleGoogleAuth() {
+            try {
+                // Set persistence based on remember me checkbox (for login) or default to session
+                const persistence = rememberMe.checked ? 
+                    browserLocalPersistence : browserSessionPersistence;
+                
+                await setPersistence(auth, persistence);
+                
+                const result = await signInWithPopup(auth, googleProvider);
+                showSuccess('Autenticação realizada com sucesso!');
+                
+                // Redirect to app after successful authentication
+                setTimeout(() => {
+                    window.location.href = 'app.html';
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Google Auth Error:', error);
+                let errorMsg = 'Erro na autenticação com Google.';
+                
+                switch (error.code) {
+                    case 'auth/account-exists-with-different-credential':
+                        errorMsg = 'Já existe uma conta com este e-mail usando outro método de login.';
+                        break;
+                    case 'auth/popup-blocked':
+                        errorMsg = 'Popup de autenticação bloqueado. Permita popups para este site.';
+                        break;
+                    case 'auth/popup-closed-by-user':
+                        errorMsg = 'Autenticação cancelada pelo usuário.';
+                        break;
+                    case 'auth/unauthorized-domain':
+                        errorMsg = 'Domínio não autorizado. Verifique as configurações do Firebase.';
+                        break;
+                    case 'auth/operation-not-allowed':
+                        errorMsg = 'Operação não permitida. Verifique se o login com Google está habilitado no Firebase.';
+                        break;
+                    case 'auth/network-request-failed':
+                        errorMsg = 'Erro de conexão. Verifique sua internet.';
+                        break;
+                }
+                
+                showError(errorMsg);
+            }
+        }
+
+        // Check if user is already logged in
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                console.log('User already logged in:', user.displayName);
+            }
         });
 
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+        });
+
+        // Tab switching
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                switchForm(tab.dataset.tab);
+            });
+        });
+
+        // Form switching links
         loginLink.addEventListener('click', (e) => {
             e.preventDefault();
             switchForm('login');
@@ -487,13 +831,29 @@
             switchForm('register');
         });
 
+        // Password visibility toggles
+        loginPasswordToggle.addEventListener('click', () => {
+            togglePasswordVisibility(loginPassword, loginPasswordToggle);
+        });
+
+        registerPasswordToggle.addEventListener('click', () => {
+            togglePasswordVisibility(registerPassword, registerPasswordToggle);
+        });
+
+        registerConfirmPasswordToggle.addEventListener('click', () => {
+            togglePasswordVisibility(registerConfirmPassword, registerConfirmPasswordToggle);
+        });
+
+        // Form submissions
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            clearMessages();
+            
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             
             if (!email || !password) {
-                showMessage('Preencha todos os campos', 'error');
+                showError('Por favor, preencha todos os campos.');
                 return;
             }
             
@@ -502,30 +862,34 @@
 
         registerForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            clearMessages();
+            
             const name = document.getElementById('registerName').value;
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
             const confirmPassword = document.getElementById('registerConfirmPassword').value;
             
             if (!name || !email || !password || !confirmPassword) {
-                showMessage('Preencha todos os campos', 'error');
+                showError('Por favor, preencha todos os campos.');
                 return;
             }
             
-            handleRegistration(name, email, password, confirmPassword);
+            if (password !== confirmPassword) {
+                showError('As senhas não coincidem.');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showError('A senha deve ter pelo menos 6 caracteres.');
+                return;
+            }
+            
+            handleRegistration(name, email, password);
         });
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            setupPasswordToggles();
-            
-            // Check if user is already "logged in" (for demo purposes)
-            const isLoggedIn = localStorage.getItem('novaup_demo_logged_in');
-            if (isLoggedIn) {
-                // Auto-redirect if already logged in (for demo)
-                window.location.href = 'main.html';
-            }
-        });
+        // Google authentication
+        googleLoginButton.addEventListener('click', handleGoogleAuth);
+        googleRegisterButton.addEventListener('click', handleGoogleAuth);
     </script>
 </body>
 </html>
