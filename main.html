@@ -1225,6 +1225,76 @@
             });
         }
 
+        // Handle login
+async function handleLogin(email, password) {
+    try {
+        setButtonLoading(loginButton, true);
+        
+        const persistence = rememberMe.checked ? 
+            browserLocalPersistence : browserSessionPersistence;
+        
+        await setPersistence(auth, persistence);
+        
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        showSuccess('Login realizado com sucesso!');
+        
+        // REDIRECIONAMENTO AUTOMÁTICO - LINHA ADICIONADA
+        setTimeout(() => {
+            window.location.href = 'main.html';
+        }, 1500);
+        
+    } catch (error) {
+        // ... tratamento de erro
+    } finally {
+        setButtonLoading(loginButton, false);
+    }
+}
+
+// Handle registration  
+async function handleRegistration(name, email, password) {
+    try {
+        setButtonLoading(registerButton, true);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        
+        await updateProfile(userCredential.user, {
+            displayName: name
+        });
+        
+        showSuccess('Conta criada com sucesso! Redirecionando...');
+        
+        // REDIRECIONAMENTO AUTOMÁTICO - LINHA ADICIONADA
+        setTimeout(() => {
+            window.location.href = 'main.html';
+        }, 1500);
+        
+    } catch (error) {
+        // ... tratamento de erro
+    } finally {
+        setButtonLoading(registerButton, false);
+    }
+}
+
+// Handle Google authentication
+async function handleGoogleAuth() {
+    try {
+        const persistence = rememberMe.checked ? 
+            browserLocalPersistence : browserSessionPersistence;
+        
+        await setPersistence(auth, persistence);
+        
+        const result = await signInWithPopup(auth, googleProvider);
+        showSuccess('Autenticação realizada com sucesso!');
+        
+        // REDIRECIONAMENTO AUTOMÁTICO - LINHA ADICIONADA
+        setTimeout(() => {
+            window.location.href = 'main.html';
+        }, 1500);
+        
+    } catch (error) {
+        // ... tratamento de erro
+    }
+}
+        
         // Initialize the app
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
