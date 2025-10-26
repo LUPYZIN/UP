@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaUP - Acesso</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-neon: #00f5ff;
+            --secondary-neon: #ff00ff;
+            --accent-neon: #00ff88;
+            --deep-space: #050510;
+            --cosmic-purple: #1a1a2e;
+            --nebula-blue: #16213e;
+            --stardust: #0f3460;
+            --text-glow: #e2e2f2;
+            --text-dim: #8b8ba8;
+            --success-pulse: #00ff95;
+            --warning-pulse: #ffaa00;
+            --error-pulse: #ff2a6d;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --neon-glow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+            --transition-elastic: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SF Pro Display', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 245, 255, 0.03) 0%, transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 255, 0.03) 0%, transparent 30%),
+                linear-gradient(135deg, var(--deep-space) 0%, var(--cosmic-purple) 50%, var(--nebula-blue) 100%);
+            color: var(--text-glow);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E"),
+                radial-gradient(circle at 50% 50%, rgba(0, 245, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 440px;
+            animation: cosmicEntrance 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes cosmicEntrance {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.8) translateY(50px); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1) translateY(0); 
+            }
+        }
+
+        .quantum-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--glass-shadow);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quantum-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(0, 245, 255, 0.1) 0%, 
+                rgba(255, 0, 255, 0.05) 50%, 
+                transparent 100%);
+            border-radius: 24px;
+            pointer-events: none;
+        }
+
+        .portal-logo {
+            text-align: center;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .portal-logo i {
+            font-size: 64px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--primary-neon), var(--secondary-neon));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: portalSpin 8s linear infinite;
+        }
+
+        @keyframes portalSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .portal-logo h1 {
+            font-weight: 800;
+            font-size: 32px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--text-glow), var(--primary-neon));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .portal-logo p {
+            color: var(--text-dim);
+            font-size: 16px;
+        }
+
+        .quantum-tabs {
+            display: flex;
+            margin-bottom: 32px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            padding: 6px;
+            position: relative;
+        }
+
+        .quantum-tab {
+            flex: 1;
+            padding: 14px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: var(--transition-elastic);
+            font-weight: 600;
+            font-size: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quantum-tab.active {
+            background: linear-gradient(135deg, var(--primary-neon), var(--accent-neon));
+            color: var(--deep-space);
+            box-shadow: 0 4px 20px rgba(0, 245, 255, 0.4);
+        }
+
+        .quantum-form {
+            display: none;
+        }
+
+        .quantum-form.active {
+            display: block;
+            animation: quantumReveal 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes quantumReveal {
+            from { 
+                opacity: 0; 
+                transform: translateX(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0); 
+            }
+        }
+
+        .quantum-field {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .quantum-field label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-wormhole {
+            position: relative;
+        }
+
+        .input-wormhole i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            transition: var(--transition-smooth);
+            font-size: 18px;
+        }
+
+        .input-wormhole input {
+            width: 100%;
+            padding: 16px 20px 16px 52px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            color: var(--text-glow);
+            font-size: 16px;
+            transition: var(--transition-smooth);
+            backdrop-filter: blur(10px);
+        }
+
+        .input-wormhole input:focus {
+            outline: none;
+            border-color: var(--primary-neon);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+        }
+
+        .input-wormhole input:focus + i {
+            color: var(--primary-neon);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .password-toggle:hover {
+            color: var(--text-glow);
+        }
+
+        .quantum-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .remember-quantum {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .remember-quantum input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-neon);
+        }
+
+        .forgot-portal {
+            color: var(--primary-neon);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .forgot-portal:hover {
+            color: var(--accent-neon);
+            text-shadow: 0 0 10px var(--primary-neon);
+        }
+
+        .quantum-btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-elastic);
+            background: linear-gradient(135deg, var(--primary-neon), var(--accent-neon));
+            color: var(--deep-space);
+            box-shadow: 0 4px 20px rgba(0, 245, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quantum-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: var(--transition-smooth);
+        }
+
+        .quantum-btn:hover::before {
+            left: 100%;
+        }
+
+        .quantum-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 245, 255, 0.6);
+        }
+
+        .quantum-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quantum-divider {
+            display: flex;
+            align-items: center;
+            margin: 28px 0;
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+
+        .quantum-divider::before,
+        .quantum-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+        }
+
+        .quantum-divider span {
+            padding: 0 16px;
+        }
+
+        .google-portal {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 16px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-elastic);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .google-portal:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            border-color: var(--primary-neon);
+        }
+
+        .quantum-footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--text-dim);
+        }
+
+        .quantum-footer a {
+            color: var(--primary-neon);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            font-weight: 600;
+        }
+
+        .quantum-footer a:hover {
+            color: var(--accent-neon);
+            text-shadow: 0 0 10px var(--primary-neon);
+        }
+
+        .quantum-message {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            display: none;
+            animation: quantumPulse 0.6s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes quantumPulse {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .message-success {
+            background: rgba(0, 255, 149, 0.1);
+            border-color: rgba(0, 255, 149, 0.3);
+            color: var(--success-pulse);
+        }
+
+        .message-error {
+            background: rgba(255, 42, 109, 0.1);
+            border-color: rgba(255, 42, 109, 0.3);
+            color: var(--error-pulse);
+        }
+
+        .loading-quantum {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(5, 5, 16, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--deep-space);
+            animation: quantumLoad 1s ease-in-out infinite;
+        }
+
+        @keyframes quantumLoad {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Floating Particles */
+        .quantum-particle {
+            position: fixed;
+            background: var(--primary-neon);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.3;
+            animation: floatParticle 20s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100px) translateX(100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .quantum-card {
+                padding: 30px 24px;
+            }
+            
+            .portal-logo i {
+                font-size: 56px;
+            }
+            
+            .portal-logo h1 {
+                font-size: 28px;
+            }
+            
+            .quantum-options {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles -->
+    <div id="particlesContainer"></div>
+    
+    <div class="auth-container">
+        <div class="quantum-card">
+            <div class="portal-logo">
+                <i class="fas fa-atom"></i>
+                <h1>NovaUP</h1>
+                <p>Acesse o sistema quântico</p>
+            </div>
+            
+            <div class="quantum-tabs">
+                <div class="quantum-tab active" data-tab="login">Entrar</div>
+                <div class="quantum-tab" data-tab="register">Registrar</div>
+            </div>
+            
+            <div class="quantum-message" id="quantumMessage"></div>
+            
+            <!-- Login Form -->
+            <form class="quantum-form active" id="loginForm">
+                <div class="quantum-field">
+                    <label for="loginEmail">E-mail Quântico</label>
+                    <div class="input-wormhole">
+                        <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+                
+                <div class="quantum-field">
+                    <label for="loginPassword">Senha Dimensional</label>
+                    <div class="input-wormhole">
+                        <input type="password" id="loginPassword" placeholder="Sua senha" required>
+                        <i class="fas fa-lock"></i>
+                        <span class="password-toggle" id="loginPasswordToggle">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="quantum-options">
+                    <div class="remember-quantum">
+                        <input type="checkbox" id="rememberLogin">
+                        <label for="rememberLogin">Manter conectado</label>
+                    </div>
+                    <a href="#" class="forgot-portal">Esqueceu a senha?</a>
+                </div>
+                
+                <button type="submit" class="quantum-btn" id="loginBtn">
+                    <span id="loginText">Acessar Portal</span>
+                </button>
+                
+                <div class="quantum-divider">
+                    <span>ou continue com</span>
+                </div>
+                
+                <button type="button" class="google-portal" id="googleLoginBtn">
+                    <i class="fab fa-google"></i>
+                    <span>Google</span>
+                </button>
+                
+                <div class="quantum-footer">
+                    Não tem uma conta? <a href="#" id="registerLink">Crie um portal</a>
+                </div>
+            </form>
+            
+            <!-- Register Form -->
+            <form class="quantum-form" id="registerForm">
+                <div class="quantum-field">
+                    <label for="registerName">Nome Quântico</label>
+                    <div class="input-wormhole">
+                        <input type="text" id="registerName" placeholder="Como quer ser chamado?" required>
+                        <i class="fas fa-user-astronaut"></i>
+                    </div>
+                </div>
+                
+                <div class="quantum-field">
+                    <label for="registerEmail">E-mail Quântico</label>
+                    <div class="input-wormhole">
+                        <input type="email" id="registerEmail" placeholder="seu@email.com" required>
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+                
+                <div class="quantum-field">
+                    <label for="registerPassword">Senha Dimensional</label>
+                    <div class="input-wormhole">
+                        <input type="password" id="registerPassword" placeholder="Crie uma senha forte" required>
+                        <i class="fas fa-lock"></i>
+                        <span class="password-toggle" id="registerPasswordToggle">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="quantum-field">
+                    <label for="registerConfirmPassword">Confirmar Senha</label>
+                    <div class="input-wormhole">
+                        <input type="password" id="registerConfirmPassword" placeholder="Digite novamente" required>
+                        <i class="fas fa-lock"></i>
+                        <span class="password-toggle" id="registerConfirmPasswordToggle">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="quantum-btn" id="registerBtn">
+                    <span id="registerText">Criar Portal Quântico</span>
+                </button>
+                
+                <div class="quantum-divider">
+                    <span>ou continue com</span>
+                </div>
+                
+                <button type="button" class="google-portal" id="googleRegisterBtn">
+                    <i class="fab fa-google"></i>
+                    <span>Google</span>
+                </button>
+                
+                <div class="quantum-footer">
+                    Já tem uma conta? <a href="#" id="loginLink">Acesse o portal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, 
+            updateProfile,
+            GoogleAuthProvider, 
+            signInWithPopup,
+            setPersistence,
+            browserSessionPersistence,
+            browserLocalPersistence,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA5ohHJi-9cOGOM_2pqhDJbFDUtf_X3VCg",
+            authDomain: "nova-up-22710.firebaseapp.com",
+            projectId: "nova-up-22710",
+            storageBucket: "nova-up-22710.firebasestorage.app",
+            messagingSenderId: "240064659163",
+            appId: "1:240064659163:web:54c96e8af0ce42754016fe",
+            measurementId: "G-WJ20TVHYGG"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        // Configure Google Provider
+        const googleProvider = new GoogleAuthProvider();
+        googleProvider.addScope('email');
+        googleProvider.addScope('profile');
+        googleProvider.setCustomParameters({
+            prompt: 'select_account'
+        });
+
+        // DOM Elements
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        const loginText = document.getElementById('loginText');
+        const registerText = document.getElementById('registerText');
+        const loginPasswordToggle = document.getElementById('loginPasswordToggle');
+        const registerPasswordToggle = document.getElementById('registerPasswordToggle');
+        const registerConfirmPasswordToggle = document.getElementById('registerConfirmPasswordToggle');
+        const loginPassword = document.getElementById('loginPassword');
+        const registerPassword = document.getElementById('registerPassword');
+        const registerConfirmPassword = document.getElementById('registerConfirmPassword');
+        const quantumMessage = document.getElementById('quantumMessage');
+        const quantumTabs = document.querySelectorAll('.quantum-tab');
+        const loginLink = document.getElementById('loginLink');
+        const registerLink = document.getElementById('registerLink');
+        const googleLoginBtn = document.getElementById('googleLoginBtn');
+        const googleRegisterBtn = document.getElementById('googleRegisterBtn');
+        const rememberLogin = document.getElementById('rememberLogin');
+
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particlesContainer');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('quantum-particle');
+                
+                const size = Math.random() * 6 + 2;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 20;
+                const duration = Math.random() * 10 + 20;
+                const color = Math.random() > 0.5 ? 'var(--primary-neon)' : 'var(--secondary-neon)';
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}vw`;
+                particle.style.bottom = `-${size}px`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.background = color;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Switch between login and register forms
+        function switchForm(formType) {
+            // Update tabs
+            quantumTabs.forEach(tab => {
+                if (tab.dataset.tab === formType) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            // Update forms
+            if (formType === 'login') {
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+            } else {
+                loginForm.classList.remove('active');
+                registerForm.classList.add('active');
+            }
+            
+            // Clear messages
+            clearMessage();
+        }
+
+        // Toggle password visibility
+        function togglePasswordVisibility(inputElement, toggleElement) {
+            const icon = toggleElement.querySelector('i');
+            
+            if (inputElement.type === 'password') {
+                inputElement.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                inputElement.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Show message
+        function showMessage(message, type = 'error') {
+            quantumMessage.textContent = message;
+            quantumMessage.className = `quantum-message message-${type}`;
+            quantumMessage.style.display = 'block';
+        }
+
+        // Clear message
+        function clearMessage() {
+            quantumMessage.style.display = 'none';
+        }
+
+        // Set button loading state
+        function setButtonLoading(button, textElement, isLoading) {
+            if (isLoading) {
+                button.disabled = true;
+                textElement.innerHTML = '<div class="loading-quantum"></div>';
+            } else {
+                button.disabled = false;
+                if (button.id === 'loginBtn') {
+                    textElement.textContent = 'Acessar Portal';
+                } else {
+                    textElement.textContent = 'Criar Portal Quântico';
+                }
+            }
+        }
+
+        // Handle login
+        async function handleLogin(email, password) {
+            try {
+                setButtonLoading(loginBtn, loginText, true);
+                
+                // Set persistence based on remember me checkbox
+                const persistence = rememberLogin.checked ? 
+                    browserLocalPersistence : browserSessionPersistence;
+                
+                await setPersistence(auth, persistence);
+                
+                await signInWithEmailAndPassword(auth, email, password);
+                
+                showMessage('Portal acessado com sucesso! Redirecionando...', 'success');
+                
+                // Redirect to main page after successful login
+                setTimeout(() => {
+                    window.location.href = 'main.html';
+                }, 1500);
+                
+            } catch (error) {
+                let errorMsg = 'Erro ao acessar o portal. Tente novamente.';
+                
+                switch (error.code) {
+                    case 'auth/invalid-email':
+                        errorMsg = 'E-mail quântico inválido.';
+                        break;
+                    case 'auth/user-disabled':
+                        errorMsg = 'Este portal foi desativado.';
+                        break;
+                    case 'auth/user-not-found':
+                        errorMsg = 'Nenhum portal encontrado com este e-mail.';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMsg = 'Senha dimensional incorreta.';
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMsg = 'Muitas tentativas de acesso. Tente novamente mais tarde.';
+                        break;
+                    case 'auth/network-request-failed':
+                        errorMsg = 'Erro de conexão dimensional. Verifique sua internet.';
+                        break;
+                }
+                
+                showMessage(errorMsg, 'error');
+            } finally {
+                setButtonLoading(loginBtn, loginText, false);
+            }
+        }
+
+        // Handle registration
+        async function handleRegistration(name, email, password) {
+            try {
+                setButtonLoading(registerBtn, registerText, true);
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                
+                // Update profile with display name
+                await updateProfile(userCredential.user, {
+                    displayName: name
+                });
+                
+                showMessage('Portal quântico criado com sucesso! Redirecionando...', 'success');
+                
+                // Redirect to main page after successful registration
+                setTimeout(() => {
+                    window.location.href = 'main.html';
+                }, 1500);
+                
+            } catch (error) {
+                let errorMsg = 'Erro ao criar portal quântico. Tente novamente.';
+                
+                switch (error.code) {
+                    case 'auth/email-already-in-use':
+                        errorMsg = 'Este e-mail quântico já está em uso.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMsg = 'E-mail quântico inválido.';
+                        break;
+                    case 'auth/operation-not-allowed':
+                        errorMsg = 'Operação dimensional não permitida.';
+                        break;
+                    case 'auth/weak-password':
+                        errorMsg = 'A senha dimensional é muito fraca. Use pelo menos 6 caracteres.';
+                        break;
+                    case 'auth/network-request-failed':
+                        errorMsg = 'Erro de conexão dimensional. Verifique sua internet.';
+                        break;
+                }
+                
+                showMessage(errorMsg, 'error');
+            } finally {
+                setButtonLoading(registerBtn, registerText, false);
+            }
+        }
+
+        // Handle Google authentication
+        async function handleGoogleAuth() {
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                showMessage('Autenticação quântica realizada! Redirecionando...', 'success');
+                
+                // Redirect to main page after successful authentication
+                setTimeout(() => {
+                    window.location.href = 'main.html';
+                }, 1500);
+                
+            } catch (error) {
+                let errorMsg = 'Erro na autenticação quântica com Google.';
+                
+                switch (error.code) {
+                    case 'auth/account-exists-with-different-credential':
+                        errorMsg = 'Já existe um portal com este e-mail usando outro método de acesso.';
+                        break;
+                    case 'auth/popup-blocked':
+                        errorMsg = 'Portal de autenticação bloqueado. Permita popups para este site.';
+                        break;
+                    case 'auth/popup-closed-by-user':
+                        errorMsg = 'Autenticação quântica cancelada pelo usuário.';
+                        break;
+                    case 'auth/unauthorized-domain':
+                        errorMsg = 'Domínio não autorizado. Verifique as configurações do Firebase.';
+                        break;
+                    case 'auth/operation-not-allowed':
+                        errorMsg = 'Operação não permitida. Verifique se o login com Google está habilitado.';
+                        break;
+                    case 'auth/network-request-failed':
+                        errorMsg = 'Erro de conexão dimensional. Verifique sua internet.';
+                        break;
+                }
+                
+                showMessage(errorMsg, 'error');
+            }
+        }
+
+        // Check if user is already logged in and redirect
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is already logged in, redirect to main page
+                console.log('Usuário já está logado, redirecionando...');
+                window.location.href = 'main.html';
+            }
+        });
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+        });
+
+        // Tab switching
+        quantumTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                switchForm(tab.dataset.tab);
+            });
+        });
+
+        // Form switching links
+        loginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchForm('login');
+        });
+
+        registerLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchForm('register');
+        });
+
+        // Password visibility toggles
+        loginPasswordToggle.addEventListener('click', () => {
+            togglePasswordVisibility(loginPassword, loginPasswordToggle);
+        });
+
+        registerPasswordToggle.addEventListener('click', () => {
+            togglePasswordVisibility(registerPassword, registerPasswordToggle);
+        });
+
+        registerConfirmPasswordToggle.addEventListener('click', () => {
+            togglePasswordVisibility(registerConfirmPassword, registerConfirmPasswordToggle);
+        });
+
+        // Form submissions
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearMessage();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!email || !password) {
+                showMessage('Preencha todos os campos do portal.', 'error');
+                return;
+            }
+            
+            handleLogin(email, password);
+        });
+
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearMessage();
+            
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            
+            if (!name || !email || !password || !confirmPassword) {
+                showMessage('Preencha todos os campos do portal quântico.', 'error');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showMessage('As senhas dimensionais não coincidem.', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showMessage('A senha dimensional deve ter pelo menos 6 caracteres.', 'error');
+                return;
+            }
+            
+            handleRegistration(name, email, password);
+        });
+
+        // Google authentication
+        googleLoginBtn.addEventListener('click', handleGoogleAuth);
+        googleRegisterBtn.addEventListener('click', handleGoogleAuth);
+    </script>
+</body>
+</html>
