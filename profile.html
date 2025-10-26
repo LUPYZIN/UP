@@ -64,6 +64,34 @@
             transition: var(--transition);
         }
 
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* Layout */
         .app-container {
             display: flex;
@@ -416,28 +444,6 @@
             min-height: 100px;
         }
 
-        .badge-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .badge {
-            display: flex;
-            align-items: center;
-            background: rgba(88, 101, 242, 0.1);
-            border-radius: 20px;
-            padding: 8px 15px;
-            font-size: 12px;
-            color: var(--primary-light);
-            border: 1px solid rgba(88, 101, 242, 0.3);
-        }
-
-        .badge i {
-            margin-right: 5px;
-        }
-
         .social-links {
             display: flex;
             flex-direction: column;
@@ -484,80 +490,6 @@
 
         .social-input:focus {
             outline: none;
-        }
-
-        .connections-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 15px;
-        }
-
-        .connection {
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .connection:hover {
-            transform: translateY(-3px);
-        }
-
-        .connection-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 8px;
-            border: 2px solid var(--primary-color);
-        }
-
-        .connection-name {
-            font-size: 12px;
-            color: var(--text-secondary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .activity-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .light-theme .activity-item {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .activity-item:last-child {
-            border-bottom: none;
-        }
-
-        .activity-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: var(--primary-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 15px;
-            color: white;
-        }
-
-        .activity-details {
-            flex: 1;
-        }
-
-        .activity-title {
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
-
-        .activity-time {
-            font-size: 12px;
-            color: var(--text-muted);
         }
 
         /* Theme Customization */
@@ -970,13 +902,18 @@
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+    </div>
+
     <!-- Mobile Menu Toggle -->
     <div class="mobile-menu-toggle" id="mobileMenuToggle">
         <i class="fas fa-bars"></i>
     </div>
 
     <!-- App Container -->
-    <div class="app-container">
+    <div class="app-container" id="appContainer" style="display: none;">
         <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -1003,7 +940,7 @@
                     <i class="fas fa-user"></i>
                     <span class="nav-text">Perfil</span>
                 </a>
-                <a href="settings.html" class="nav-item">
+                <a href="#" class="nav-item" id="settingsBtn">
                     <i class="fas fa-cog"></i>
                     <span class="nav-text">Configurações</span>
                 </a>
@@ -1040,20 +977,20 @@
                         </div>
                     </div>
                     <div class="user-info">
-                        <h2 id="userDisplayName">Nome do Usuário</h2>
-                        <div class="user-tag" id="userTag">@usuario</div>
-                        <div class="user-bio" id="userBio">Esta é uma breve biografia do usuário. Pode conter interesses, hobbies ou qualquer informação que o usuário queira compartilhar.</div>
+                        <h2 id="userDisplayName">Carregando...</h2>
+                        <div class="user-tag" id="userTag">@carregando</div>
+                        <div class="user-bio" id="userBio">Carregando informações do perfil...</div>
                         <div class="user-stats">
                             <div class="stat">
-                                <div class="stat-value" id="friendsCount">127</div>
+                                <div class="stat-value" id="friendsCount">0</div>
                                 <div class="stat-label">Amigos</div>
                             </div>
                             <div class="stat">
-                                <div class="stat-value" id="serversCount">12</div>
+                                <div class="stat-value" id="serversCount">0</div>
                                 <div class="stat-label">Servidores</div>
                             </div>
                             <div class="stat">
-                                <div class="stat-value" id="badgesCount">8</div>
+                                <div class="stat-value" id="badgesCount">0</div>
                                 <div class="stat-label">Conquistas</div>
                             </div>
                         </div>
@@ -1071,19 +1008,19 @@
                     </div>
                     <div class="form-group">
                         <label for="userStatus">Status</label>
-                        <input type="text" class="form-control" id="userStatus" placeholder="Defina seu status..." value="Jogando NovaUP">
+                        <input type="text" class="form-control" id="userStatus" placeholder="Defina seu status..." disabled>
                     </div>
                     <div class="form-group">
                         <label for="userLocation">Localização</label>
-                        <input type="text" class="form-control" id="userLocation" placeholder="Onde você está?" value="São Paulo, Brasil">
+                        <input type="text" class="form-control" id="userLocation" placeholder="Onde você está?" disabled>
                     </div>
                     <div class="form-group">
                         <label for="userWebsite">Website</label>
-                        <input type="text" class="form-control" id="userWebsite" placeholder="Seu site ou portfolio" value="https://meusite.com">
+                        <input type="text" class="form-control" id="userWebsite" placeholder="Seu site ou portfolio" disabled>
                     </div>
                     <div class="form-group">
                         <label for="userBirthday">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="userBirthday" value="1990-01-01">
+                        <input type="date" class="form-control" id="userBirthday" disabled>
                     </div>
                 </div>
 
@@ -1098,31 +1035,31 @@
                             <div class="social-icon" style="background: #1DA1F2;">
                                 <i class="fab fa-twitter"></i>
                             </div>
-                            <input type="text" class="social-input" id="twitterLink" placeholder="https://twitter.com/seuuser" value="">
+                            <input type="text" class="social-input" id="twitterLink" placeholder="https://twitter.com/seuuser" disabled>
                         </div>
                         <div class="social-link">
                             <div class="social-icon" style="background: #4267B2;">
                                 <i class="fab fa-facebook"></i>
                             </div>
-                            <input type="text" class="social-input" id="facebookLink" placeholder="https://facebook.com/seuuser" value="">
+                            <input type="text" class="social-input" id="facebookLink" placeholder="https://facebook.com/seuuser" disabled>
                         </div>
                         <div class="social-link">
                             <div class="social-icon" style="background: #E1306C;">
                                 <i class="fab fa-instagram"></i>
                             </div>
-                            <input type="text" class="social-input" id="instagramLink" placeholder="https://instagram.com/seuuser" value="">
+                            <input type="text" class="social-input" id="instagramLink" placeholder="https://instagram.com/seuuser" disabled>
                         </div>
                         <div class="social-link">
                             <div class="social-icon" style="background: #333;">
                                 <i class="fab fa-github"></i>
                             </div>
-                            <input type="text" class="social-input" id="githubLink" placeholder="https://github.com/seuuser" value="">
+                            <input type="text" class="social-input" id="githubLink" placeholder="https://github.com/seuuser" disabled>
                         </div>
                         <div class="social-link">
                             <div class="social-icon" style="background: #0077B5;">
                                 <i class="fab fa-linkedin"></i>
                             </div>
-                            <input type="text" class="social-input" id="linkedinLink" placeholder="https://linkedin.com/in/seuuser" value="">
+                            <input type="text" class="social-input" id="linkedinLink" placeholder="https://linkedin.com/in/seuuser" disabled>
                         </div>
                     </div>
                 </div>
@@ -1151,43 +1088,8 @@
                         <i class="fas fa-history"></i>
                         <h3>Atividade Recente</h3>
                     </div>
-                    <div class="activity-list">
-                        <div class="activity-item">
-                            <div class="activity-icon">
-                                <i class="fas fa-gamepad"></i>
-                            </div>
-                            <div class="activity-details">
-                                <div class="activity-title">Jogando NovaUP</div>
-                                <div class="activity-time">Há 2 horas</div>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon">
-                                <i class="fas fa-comment"></i>
-                            </div>
-                            <div class="activity-details">
-                                <div class="activity-title">Enviou uma mensagem em #geral</div>
-                                <div class="activity-time">Há 5 horas</div>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon">
-                                <i class="fas fa-user-plus"></i>
-                            </div>
-                            <div class="activity-details">
-                                <div class="activity-title">Adicionou um amigo</div>
-                                <div class="activity-time">Há 1 dia</div>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon">
-                                <i class="fas fa-image"></i>
-                            </div>
-                            <div class="activity-details">
-                                <div class="activity-title">Alterou a foto de perfil</div>
-                                <div class="activity-time">Há 2 dias</div>
-                            </div>
-                        </div>
+                    <div class="activity-list" id="activityList">
+                        <!-- Activities will be loaded here -->
                     </div>
                 </div>
             </div>
@@ -1244,6 +1146,47 @@
         </div>
     </div>
 
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Configurações</h3>
+                <button class="close-modal" id="closeSettingsModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="settings-options">
+                <div class="form-group">
+                    <label for="notifications">Notificações</label>
+                    <select class="form-control" id="notifications">
+                        <option value="all">Todas as notificações</option>
+                        <option value="mentions">Apenas menções</option>
+                        <option value="none">Nenhuma</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="language">Idioma</label>
+                    <select class="form-control" id="language">
+                        <option value="pt">Português</option>
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="privacy">Privacidade</label>
+                    <select class="form-control" id="privacy">
+                        <option value="public">Público</option>
+                        <option value="friends">Apenas amigos</option>
+                        <option value="private">Privado</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" id="saveSettingsBtn">
+                    <i class="fas fa-save"></i> Salvar Configurações
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Notification -->
     <div class="toast" id="toast">
         <i class="fas fa-check-circle"></i>
@@ -1278,6 +1221,8 @@
         const storage = firebase.storage();
 
         // DOM Elements
+        const loadingScreen = document.getElementById('loadingScreen');
+        const appContainer = document.getElementById('appContainer');
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const sidebar = document.getElementById('sidebar');
         const avatarEditBtn = document.getElementById('avatarEditBtn');
@@ -1306,6 +1251,13 @@
         const themeToggle = document.getElementById('themeToggle');
         const themeColors = document.querySelectorAll('.theme-color');
         const logoutBtn = document.getElementById('logoutBtn');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const closeSettingsModal = document.getElementById('closeSettingsModal');
+        const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+        const activityList = document.getElementById('activityList');
+        
+        // Social inputs
         const socialInputs = {
             twitter: document.getElementById('twitterLink'),
             facebook: document.getElementById('facebookLink'),
@@ -1316,6 +1268,7 @@
 
         // App State
         let currentUser = null;
+        let userData = null;
         let cropper = null;
         let selectedFile = null;
         let selectedStatus = 'online';
@@ -1328,6 +1281,11 @@
                 if (user) {
                     currentUser = user;
                     loadUserProfile();
+                    loadingScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        appContainer.style.display = 'flex';
+                    }, 500);
                 } else {
                     // Redirect to login if not authenticated
                     window.location.href = 'index.html';
@@ -1343,49 +1301,8 @@
             db.collection('users').doc(currentUser.uid).get()
                 .then((doc) => {
                     if (doc.exists) {
-                        const userData = doc.data();
-                        
-                        // Update UI with user data
-                        userDisplayName.textContent = userData.displayName || currentUser.displayName || 'Usuário';
-                        userTag.textContent = `@${userData.username || currentUser.email.split('@')[0]}`;
-                        userBio.textContent = userData.bio || 'Esta é uma breve biografia do usuário. Pode conter interesses, hobbies ou qualquer informação que o usuário queira compartilhar.';
-                        
-                        // Update avatar if exists
-                        if (userData.avatarURL) {
-                            userAvatar.src = userData.avatarURL;
-                            avatarPreview.src = userData.avatarURL;
-                        }
-                        
-                        // Update stats
-                        if (userData.friendsCount) friendsCount.textContent = userData.friendsCount;
-                        if (userData.serversCount) serversCount.textContent = userData.serversCount;
-                        if (userData.badgesCount) badgesCount.textContent = userData.badgesCount;
-                        
-                        // Update about section
-                        if (userData.status) userStatus.value = userData.status;
-                        if (userData.location) userLocation.value = userData.location;
-                        if (userData.website) userWebsite.value = userData.website;
-                        if (userData.birthday) userBirthday.value = userData.birthday;
-                        
-                        // Update status
-                        if (userData.statusType) {
-                            selectedStatus = userData.statusType;
-                            updateStatusSelection();
-                        }
-                        
-                        // Update social links
-                        if (userData.socialLinks) {
-                            if (userData.socialLinks.twitter) socialInputs.twitter.value = userData.socialLinks.twitter;
-                            if (userData.socialLinks.facebook) socialInputs.facebook.value = userData.socialLinks.facebook;
-                            if (userData.socialLinks.instagram) socialInputs.instagram.value = userData.socialLinks.instagram;
-                            if (userData.socialLinks.github) socialInputs.github.value = userData.socialLinks.github;
-                            if (userData.socialLinks.linkedin) socialInputs.linkedin.value = userData.socialLinks.linkedin;
-                        }
-                        
-                        // Update theme color if exists
-                        if (userData.themeColor) {
-                            updateThemeColor(userData.themeColor);
-                        }
+                        userData = doc.data();
+                        updateUIWithUserData();
                     } else {
                         // Create user document if it doesn't exist
                         createUserProfile();
@@ -1397,9 +1314,59 @@
                 });
         }
 
+        // Update UI with user data
+        function updateUIWithUserData() {
+            if (!userData) return;
+            
+            // Update UI with user data
+            userDisplayName.textContent = userData.displayName || currentUser.displayName || 'Usuário';
+            userTag.textContent = `@${userData.username || currentUser.email.split('@')[0]}`;
+            userBio.textContent = userData.bio || 'Esta é uma breve biografia do usuário. Pode conter interesses, hobbies ou qualquer informação que o usuário queira compartilhar.';
+            
+            // Update avatar if exists
+            if (userData.avatarURL) {
+                userAvatar.src = userData.avatarURL;
+                avatarPreview.src = userData.avatarURL;
+            }
+            
+            // Update stats
+            if (userData.friendsCount) friendsCount.textContent = userData.friendsCount;
+            if (userData.serversCount) serversCount.textContent = userData.serversCount;
+            if (userData.badgesCount) badgesCount.textContent = userData.badgesCount;
+            
+            // Update about section
+            if (userData.status) userStatus.value = userData.status;
+            if (userData.location) userLocation.value = userData.location;
+            if (userData.website) userWebsite.value = userData.website;
+            if (userData.birthday) userBirthday.value = userData.birthday;
+            
+            // Update status
+            if (userData.statusType) {
+                selectedStatus = userData.statusType;
+                updateStatusSelection();
+            }
+            
+            // Update social links
+            if (userData.socialLinks) {
+                if (userData.socialLinks.twitter) socialInputs.twitter.value = userData.socialLinks.twitter;
+                if (userData.socialLinks.facebook) socialInputs.facebook.value = userData.socialLinks.facebook;
+                if (userData.socialLinks.instagram) socialInputs.instagram.value = userData.socialLinks.instagram;
+                if (userData.socialLinks.github) socialInputs.github.value = userData.socialLinks.github;
+                if (userData.socialLinks.linkedin) socialInputs.linkedin.value = userData.socialLinks.linkedin;
+            }
+            
+            // Update theme color if exists
+            if (userData.themeColor) {
+                updateThemeColor(userData.themeColor);
+            }
+            
+            // Load activities
+            loadUserActivities();
+        }
+
         // Create user profile in Firestore
         function createUserProfile() {
-            const userData = {
+            userData = {
                 uid: currentUser.uid,
                 email: currentUser.email,
                 displayName: currentUser.displayName || 'Usuário',
@@ -1418,22 +1385,74 @@
                     github: '',
                     linkedin: ''
                 },
-                friendsCount: 127,
-                serversCount: 12,
-                badgesCount: 8,
+                friendsCount: 0,
+                serversCount: 0,
+                badgesCount: 0,
                 themeColor: '#5865F2',
+                activities: [],
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             };
 
             db.collection('users').doc(currentUser.uid).set(userData)
                 .then(() => {
-                    loadUserProfile();
+                    updateUIWithUserData();
                 })
                 .catch((error) => {
                     console.error('Error creating user profile:', error);
                     showToast('Erro ao criar perfil', 'error');
                 });
+        }
+
+        // Load user activities
+        function loadUserActivities() {
+            activityList.innerHTML = '';
+            
+            if (!userData.activities || userData.activities.length === 0) {
+                activityList.innerHTML = '<div class="activity-item"><div class="activity-details"><div class="activity-title">Nenhuma atividade recente</div></div></div>';
+                return;
+            }
+            
+            userData.activities.forEach(activity => {
+                const activityItem = document.createElement('div');
+                activityItem.className = 'activity-item';
+                activityItem.innerHTML = `
+                    <div class="activity-icon">
+                        <i class="fas ${activity.icon || 'fa-circle'}"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-title">${activity.title}</div>
+                        <div class="activity-time">${activity.time}</div>
+                    </div>
+                `;
+                activityList.appendChild(activityItem);
+            });
+        }
+
+        // Add activity to user profile
+        function addActivity(title, icon = 'fa-circle') {
+            const newActivity = {
+                title: title,
+                icon: icon,
+                time: new Date().toLocaleString('pt-BR')
+            };
+            
+            // Add to local data
+            if (!userData.activities) userData.activities = [];
+            userData.activities.unshift(newActivity);
+            
+            // Keep only last 5 activities
+            if (userData.activities.length > 5) {
+                userData.activities = userData.activities.slice(0, 5);
+            }
+            
+            // Update Firestore
+            db.collection('users').doc(currentUser.uid).update({
+                activities: userData.activities,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                loadUserActivities();
+            });
         }
 
         // Update status selection UI
@@ -1484,7 +1503,7 @@
             });
             
             // Save to user profile
-            if (currentUser) {
+            if (currentUser && userData) {
                 db.collection('users').doc(currentUser.uid).update({
                     themeColor: color,
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -1611,6 +1630,7 @@
                     selectedStatus = option.dataset.status;
                     updateStatusSelection();
                     saveProfileChanges();
+                    addActivity(`Alterou status para ${selectedStatus}`, 'fa-circle');
                 });
             });
 
@@ -1638,6 +1658,7 @@
                     });
                     
                     editProfileBtn.innerHTML = '<i class="fas fa-edit"></i> Editar Perfil';
+                    addActivity('Editou o perfil', 'fa-user-edit');
                 }
             });
 
@@ -1680,12 +1701,15 @@
                 // Save theme preference
                 const isDark = !document.body.classList.contains('light-theme');
                 localStorage.setItem('novaup-theme', isDark ? 'dark' : 'light');
+                
+                addActivity(`Alterou para tema ${isDark ? 'escuro' : 'claro'}`, 'fa-palette');
             });
 
             // Theme colors
             themeColors.forEach(color => {
                 color.addEventListener('click', () => {
                     updateThemeColor(color.dataset.color);
+                    addActivity('Alterou a cor do tema', 'fa-paint-brush');
                 });
             });
 
@@ -1696,6 +1720,22 @@
                         window.location.href = 'index.html';
                     });
                 }
+            });
+
+            // Settings
+            settingsBtn.addEventListener('click', () => {
+                settingsModal.classList.add('active');
+            });
+
+            closeSettingsModal.addEventListener('click', () => {
+                settingsModal.classList.remove('active');
+            });
+
+            saveSettingsBtn.addEventListener('click', () => {
+                // Save settings logic here
+                settingsModal.classList.remove('active');
+                showToast('Configurações salvas com sucesso!', 'success');
+                addActivity('Alterou configurações', 'fa-cog');
             });
         }
 
@@ -1761,6 +1801,7 @@
                     saveAvatarBtn.innerHTML = '<i class="fas fa-save"></i> Salvar Alterações';
                     
                     showToast('Avatar atualizado com sucesso!', 'success');
+                    addActivity('Alterou a foto de perfil', 'fa-image');
                 })
                 .catch((error) => {
                     console.error('Error uploading avatar:', error);
@@ -1791,6 +1832,8 @@
 
             db.collection('users').doc(currentUser.uid).update(updates)
                 .then(() => {
+                    // Update local data
+                    Object.assign(userData, updates);
                     showToast('Perfil atualizado com sucesso!', 'success');
                 })
                 .catch((error) => {
