@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaUP - Chat</title>
+    <title>NovaUP - Chat Inovador</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #5865F2;
             --primary-dark: #4752C4;
             --primary-light: #7983F5;
-            --dark-bg: #313338;
-            --darker-bg: #2B2D31;
-            --darkest-bg: #1E1F22;
-            --sidebar-bg: #2B2D31;
-            --chat-bg: #313338;
+            --dark-bg: #0f0f13;
+            --darker-bg: #0a0a0c;
+            --darkest-bg: #050507;
+            --sidebar-bg: #16161a;
+            --chat-bg: #1a1a1f;
             --message-sent: #5865F2;
-            --message-received: #40444B;
+            --message-received: #25252d;
             --text-primary: #F2F3F5;
             --text-secondary: #B5BAC1;
             --text-muted: #8E9297;
@@ -25,8 +25,10 @@
             --online: #3BA55D;
             --idle: #FAA81A;
             --dnd: #ED4245;
-            --shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            --transition: all 0.3s ease;
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --glass-bg: rgba(30, 31, 34, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         * {
@@ -41,8 +43,192 @@
             color: var(--text-primary);
             height: 100vh;
             overflow: hidden;
+            position: relative;
         }
 
+        /* Particles Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(88, 101, 242, 0.15);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Login Screen */
+        .login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 12, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            background: var(--glass-bg);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--success));
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .logo p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .input-with-icon input {
+            width: 100%;
+            padding: 16px 16px 16px 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .input-with-icon input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.3);
+        }
+
+        .input-with-icon input:focus + i {
+            color: var(--primary-color);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* App Container */
         .app-container {
             display: flex;
             height: 100vh;
@@ -57,21 +243,33 @@
         /* Sidebar Styles */
         .sidebar {
             width: 340px;
-            background-color: var(--sidebar-bg);
+            background: var(--sidebar-bg);
             display: flex;
             flex-direction: column;
             border-right: 1px solid rgba(255, 255, 255, 0.05);
             transition: var(--transition);
             z-index: 10;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--success));
         }
 
         .sidebar-header {
-            padding: 16px;
+            padding: 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            background-color: var(--sidebar-bg);
+            background: var(--sidebar-bg);
         }
 
         .user-info {
@@ -81,8 +279,8 @@
         }
 
         .avatar {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             display: flex;
@@ -93,6 +291,7 @@
             position: relative;
             cursor: pointer;
             transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(88, 101, 242, 0.3);
         }
 
         .avatar:hover {
@@ -132,25 +331,31 @@
             cursor: pointer;
             transition: var(--transition);
             padding: 8px;
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         .sidebar-icons i:hover {
             color: var(--text-primary);
-            background-color: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .search-container {
-            padding: 16px;
+            padding: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .search-box {
             display: flex;
             align-items: center;
-            background-color: var(--darkest-bg);
-            border-radius: 8px;
-            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 12px 16px;
+            transition: var(--transition);
+        }
+
+        .search-box:focus-within {
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.3);
         }
 
         .search-box i {
@@ -192,12 +397,14 @@
 
         .chat-item {
             display: flex;
-            padding: 12px 16px;
+            padding: 16px 20px;
             cursor: pointer;
             transition: var(--transition);
             border-left: 3px solid transparent;
             animation: slideInLeft 0.5s ease;
             animation-fill-mode: both;
+            position: relative;
+            overflow: hidden;
         }
 
         @keyframes slideInLeft {
@@ -205,20 +412,35 @@
             to { opacity: 1; transform: translateX(0); }
         }
 
+        .chat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .chat-item:hover::before {
+            left: 100%;
+        }
+
         .chat-item:hover {
-            background-color: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .chat-item.active {
-            background-color: rgba(88, 101, 242, 0.1);
+            background: rgba(88, 101, 242, 0.1);
             border-left-color: var(--primary-color);
         }
 
         .chat-avatar {
-            width: 50px;
-            height: 50px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
-            margin-right: 12px;
+            margin-right: 14px;
             position: relative;
             overflow: hidden;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
@@ -228,6 +450,7 @@
             color: white;
             font-weight: bold;
             font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .chat-info {
@@ -281,6 +504,7 @@
             margin-left: auto;
             min-width: 20px;
             text-align: center;
+            box-shadow: 0 2px 5px rgba(88, 101, 242, 0.3);
         }
 
         /* Chat Area */
@@ -288,18 +512,20 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            background-color: var(--chat-bg);
+            background: var(--chat-bg);
             position: relative;
+            overflow: hidden;
         }
 
         .chat-header-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 24px;
-            background-color: var(--chat-bg);
+            padding: 20px 24px;
+            background: var(--chat-bg);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
         .contact-info {
@@ -309,8 +535,8 @@
         }
 
         .contact-avatar {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             overflow: hidden;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
@@ -319,6 +545,7 @@
             align-items: center;
             color: white;
             font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .contact-details h3 {
@@ -343,12 +570,12 @@
             cursor: pointer;
             transition: var(--transition);
             padding: 8px;
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         .chat-actions i:hover {
             color: var(--text-primary);
-            background-color: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .messages-container {
@@ -375,24 +602,25 @@
 
         .message {
             max-width: 70%;
-            padding: 12px 16px;
+            padding: 14px 18px;
             margin-bottom: 16px;
             border-radius: 18px;
             position: relative;
-            animation: messageAppear 0.4s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            animation: messageAppear 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             word-wrap: break-word;
             line-height: 1.4;
+            backdrop-filter: blur(10px);
         }
 
         @keyframes messageAppear {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(10px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .received {
             align-self: flex-start;
-            background-color: var(--message-received);
+            background: var(--message-received);
             border-bottom-left-radius: 5px;
         }
 
@@ -413,8 +641,8 @@
         .message-input-container {
             display: flex;
             align-items: center;
-            padding: 16px 24px;
-            background-color: var(--chat-bg);
+            padding: 20px 24px;
+            background: var(--chat-bg);
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
@@ -429,22 +657,28 @@
             cursor: pointer;
             transition: var(--transition);
             padding: 8px;
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         .input-actions i:hover {
             color: var(--text-primary);
-            background-color: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .message-input {
             flex: 1;
             display: flex;
             align-items: center;
-            background-color: var(--darkest-bg);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 24px;
-            padding: 12px 20px;
+            padding: 14px 20px;
             margin: 0 16px;
+            transition: var(--transition);
+        }
+
+        .message-input:focus-within {
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.3);
         }
 
         .message-input i {
@@ -472,8 +706,8 @@
         }
 
         .send-button {
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             display: flex;
@@ -482,18 +716,18 @@
             color: white;
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: 0 4px 10px rgba(88, 101, 242, 0.3);
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
         }
 
         .send-button:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(88, 101, 242, 0.4);
+            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6);
         }
 
         .typing-indicator {
             display: flex;
             align-self: flex-start;
-            background-color: var(--message-received);
+            background: var(--message-received);
             padding: 12px 16px;
             border-radius: 18px;
             border-bottom-left-radius: 5px;
@@ -571,12 +805,12 @@
             cursor: pointer;
             font-size: 20px;
             padding: 8px;
-            border-radius: 4px;
+            border-radius: 6px;
             transition: var(--transition);
         }
 
         .toggle-sidebar:hover {
-            background-color: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .no-chats {
@@ -598,20 +832,21 @@
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             color: white;
+            box-shadow: 0 4px 10px rgba(88, 101, 242, 0.3);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(88, 101, 242, 0.3);
+            box-shadow: 0 6px 15px rgba(88, 101, 242, 0.4);
         }
 
         .logout-btn {
@@ -621,12 +856,12 @@
             cursor: pointer;
             transition: var(--transition);
             padding: 8px;
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         .logout-btn:hover {
             color: var(--error);
-            background-color: rgba(237, 66, 69, 0.1);
+            background: rgba(237, 66, 69, 0.1);
         }
 
         /* New Chat Modal */
@@ -636,7 +871,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -652,13 +888,15 @@
         }
 
         .modal-content {
-            background: var(--dark-bg);
+            background: var(--glass-bg);
             padding: 24px;
-            border-radius: 8px;
+            border-radius: 16px;
             width: 90%;
             max-width: 400px;
             transform: translateY(-20px);
             transition: var(--transition);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .new-chat-modal.active .modal-content {
@@ -683,7 +921,7 @@
             font-size: 20px;
             cursor: pointer;
             padding: 4px;
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         .close-modal:hover {
@@ -698,9 +936,9 @@
         .contact-search input {
             width: 100%;
             padding: 12px 16px;
-            background: var(--darkest-bg);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
+            border-radius: 8px;
             color: var(--text-primary);
             font-size: 14px;
         }
@@ -715,7 +953,7 @@
             align-items: center;
             padding: 12px;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 8px;
             transition: var(--transition);
         }
 
@@ -724,8 +962,8 @@
         }
 
         .contact-item-avatar {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             display: flex;
@@ -734,6 +972,7 @@
             color: white;
             font-weight: bold;
             margin-right: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .contact-item-info h4 {
@@ -746,10 +985,140 @@
             color: var(--text-secondary);
             font-size: 12px;
         }
+
+        /* Status indicators */
+        .status-online {
+            background-color: var(--online);
+        }
+
+        .status-idle {
+            background-color: var(--idle);
+        }
+
+        .status-dnd {
+            background-color: var(--dnd);
+        }
+
+        /* Floating action button */
+        .fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.4);
+            z-index: 100;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(88, 101, 242, 0.6);
+        }
+
+        /* Error and success messages */
+        .error-message {
+            background: rgba(237, 66, 69, 0.1);
+            border: 1px solid rgba(237, 66, 69, 0.3);
+            color: var(--error);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            display: none;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        .success-message {
+            background: rgba(59, 165, 93, 0.1);
+            border: 1px solid rgba(59, 165, 93, 0.3);
+            color: var(--success);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Celebration effect */
+        .celebrate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
-    <div class="app-container">
+    <div class="particles" id="particles"></div>
+    <div class="celebrate" id="celebrate"></div>
+    
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-container">
+            <div class="logo">
+                <h1>NovaUP</h1>
+                <p>Conecte-se com sua comunidade</p>
+            </div>
+            
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">E-mail</label>
+                    <div class="input-with-icon">
+                        <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Senha</label>
+                    <div class="input-with-icon">
+                        <input type="password" id="loginPassword" placeholder="Sua senha" required>
+                        <i class="fas fa-lock"></i>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="loginButton">
+                    <span>Entrar</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Chat App -->
+    <div class="app-container" id="appContainer" style="display: none;">
         <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -848,6 +1217,11 @@
         </div>
     </div>
 
+    <!-- Floating Action Button -->
+    <div class="fab" id="fab">
+        <i class="fas fa-comment-medical"></i>
+    </div>
+
     <script>
         // Sample data
         const sampleChats = [
@@ -861,7 +1235,9 @@
                 messages: [
                     { text: "Olá pessoal!", sender: "received", time: "10:15" },
                     { text: "Tudo bem com vocês?", sender: "received", time: "10:16" },
-                    { text: "Tudo ótimo aqui! E com você?", sender: "sent", time: "10:18" }
+                    { text: "Tudo ótimo aqui! E com você?", sender: "sent", time: "10:18" },
+                    { text: "Aqui também! Vamos nos encontrar no domingo?", sender: "received", time: "10:20" },
+                    { text: "Combinado então! 🎉", sender: "sent", time: "10:25" }
                 ]
             },
             {
@@ -873,7 +1249,8 @@
                 initials: "AC",
                 messages: [
                     { text: "Oi, como você está?", sender: "sent", time: "09:40" },
-                    { text: "Tudo bem, obrigada! 😊", sender: "received", time: "09:45" }
+                    { text: "Tudo bem, obrigada! 😊", sender: "received", time: "09:45" },
+                    { text: "Que bom! Vamos sair esse fim de semana?", sender: "sent", time: "09:50" }
                 ]
             },
             {
@@ -884,7 +1261,21 @@
                 unread: 1,
                 initials: "CS",
                 messages: [
-                    { text: "Você viu o novo filme?", sender: "received", time: "Ontem" }
+                    { text: "Você viu o novo filme?", sender: "received", time: "Ontem" },
+                    { text: "Ainda não, é bom?", sender: "sent", time: "Ontem" }
+                ]
+            },
+            {
+                id: 4,
+                name: "Mariana Silva",
+                lastMessage: "Obrigada pela ajuda!",
+                time: "12/05",
+                unread: 0,
+                initials: "MS",
+                messages: [
+                    { text: "Oi, preciso de ajuda com um projeto", sender: "received", time: "12/05" },
+                    { text: "Claro, posso ajudar! Qual é o problema?", sender: "sent", time: "12/05" },
+                    { text: "Obrigada pela ajuda!", sender: "received", time: "12/05" }
                 ]
             }
         ];
@@ -898,6 +1289,8 @@
         ];
 
         // DOM Elements
+        const loginScreen = document.getElementById('loginScreen');
+        const appContainer = document.getElementById('appContainer');
         const sidebar = document.getElementById('sidebar');
         const toggleSidebar = document.getElementById('toggleSidebar');
         const userName = document.getElementById('userName');
@@ -918,26 +1311,168 @@
         const closeModal = document.getElementById('closeModal');
         const contactSearch = document.getElementById('contactSearch');
         const contactsList = document.getElementById('contactsList');
+        const fab = document.getElementById('fab');
+        const loginForm = document.getElementById('loginForm');
+        const loginButton = document.getElementById('loginButton');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const particlesContainer = document.getElementById('particles');
+        const celebrate = document.getElementById('celebrate');
 
         // App State
         let currentChat = null;
         let chats = [...sampleChats];
+        let isAuthenticated = false;
+
+        // Create background particles
+        function createParticles() {
+            const particleCount = 40;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size and position
+                const size = Math.random() * 60 + 10;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 10 + 20;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}vw`;
+                particle.style.bottom = `-${size}px`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Create celebration effect
+        function createCelebration() {
+            celebrate.style.display = 'block';
+            const colors = ['#5865F2', '#3BA55D', '#ED4245', '#FAA61A', '#EB459E'];
+            
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.animation = `confetti-fall ${Math.random() * 3 + 2}s linear forwards`;
+                celebrate.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+            
+            // Hide celebration container after animation
+            setTimeout(() => {
+                celebrate.style.display = 'none';
+            }, 3000);
+        }
+
+        // Show error message
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+        }
+
+        // Clear messages
+        function clearMessages() {
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+        }
+
+        // Set button loading state
+        function setButtonLoading(button, isLoading) {
+            if (isLoading) {
+                button.disabled = true;
+                button.innerHTML = '<div class="loading"></div>';
+            } else {
+                button.disabled = false;
+                button.innerHTML = '<span>Entrar</span>';
+            }
+        }
+
+        // Simulate login
+        function handleLogin(email, password) {
+            if (!email || !password) {
+                showError('Por favor, preencha todos os campos.');
+                return;
+            }
+            
+            setButtonLoading(loginButton, true);
+            
+            // Simulate API call
+            setTimeout(() => {
+                if (email === "user@example.com" && password === "password") {
+                    showSuccess('Login realizado com sucesso!');
+                    
+                    // Store user data
+                    const user = {
+                        name: "Usuário Demo",
+                        email: email
+                    };
+                    localStorage.setItem('novaup_user', JSON.stringify(user));
+                    
+                    // Create celebration effect
+                    createCelebration();
+                    
+                    // Show app after delay
+                    setTimeout(() => {
+                        loginScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            loginScreen.style.display = 'none';
+                            appContainer.style.display = 'flex';
+                            initApp();
+                        }, 500);
+                    }, 1500);
+                } else {
+                    showError('E-mail ou senha incorretos. Tente: user@example.com / password');
+                }
+                
+                setButtonLoading(loginButton, false);
+            }, 1500);
+        }
+
+        // Check if user is logged in
+        function checkAuth() {
+            const user = localStorage.getItem('novaup_user');
+            if (user) {
+                loginScreen.style.display = 'none';
+                appContainer.style.display = 'flex';
+                initApp();
+            } else {
+                loginScreen.style.display = 'flex';
+                appContainer.style.display = 'none';
+            }
+        }
 
         // Initialize the app
         function initApp() {
-            renderChats();
-            renderContacts();
-            setupEventListeners();
-            
-            // Check if user is logged in (simulated)
             const user = JSON.parse(localStorage.getItem('novaup_user'));
             if (user) {
                 userName.textContent = user.name;
                 avatarInitials.textContent = user.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
-            } else {
-                // Redirect to login if not authenticated
-                window.location.href = 'index.html';
             }
+            
+            renderChats();
+            renderContacts();
+            setupEventListeners();
+            createParticles();
         }
 
         // Render chats list
@@ -988,7 +1523,7 @@
                 chatItem.addEventListener('click', () => selectChat(chat.id));
                 chatsList.appendChild(chatItem);
                 
-                if (index === 0) {
+                if (index === 0 && !currentChat) {
                     selectChat(chat.id);
                 }
             });
@@ -1089,16 +1624,34 @@
             // Simulate reply after 2 seconds
             setTimeout(() => {
                 const replyMessage = {
-                    text: 'Mensagem recebida! 😊',
+                    text: getRandomReply(),
                     sender: 'received',
                     time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
                 };
                 
                 chat.messages.push(replyMessage);
-                chat.lastMessage = 'Mensagem recebida! 😊';
+                chat.lastMessage = replyMessage.text;
                 loadMessages(currentChat);
                 renderChats();
             }, 2000);
+        }
+
+        // Get random reply
+        function getRandomReply() {
+            const replies = [
+                'Mensagem recebida! 😊',
+                'Interessante!',
+                'Vou pensar sobre isso.',
+                'Obrigado pela informação!',
+                'Concordo com você!',
+                'Vamos combinar isso depois?',
+                'Preciso verificar isso.',
+                'Que legal! 🎉',
+                'Estou ocupado agora, mas depois conversamos.',
+                'Perfeito! 👌'
+            ];
+            
+            return replies[Math.floor(Math.random() * replies.length)];
         }
 
         // Show new chat modal
@@ -1155,7 +1708,22 @@
         function handleLogout() {
             if (confirm('Tem certeza que deseja sair?')) {
                 localStorage.removeItem('novaup_user');
-                window.location.href = 'index.html';
+                loginScreen.style.display = 'flex';
+                appContainer.style.display = 'none';
+                loginScreen.style.opacity = '1';
+                currentChat = null;
+                messageInput.value = '';
+                messageInput.disabled = true;
+                messageInput.placeholder = 'Digite uma mensagem...';
+                
+                // Reset to welcome message
+                messagesContainer.innerHTML = `
+                    <div class="welcome-message">
+                        <i class="fas fa-comments"></i>
+                        <h2>Bem-vindo ao NovaUP</h2>
+                        <p>Selecione uma conversa da lista para começar a enviar mensagens ou inicie uma nova conversa.</p>
+                    </div>
+                `;
             }
         }
 
@@ -1170,6 +1738,7 @@
             });
             
             newChatButton.addEventListener('click', showNewChatModal);
+            fab.addEventListener('click', showNewChatModal);
             
             toggleSidebar.addEventListener('click', () => {
                 sidebar.classList.toggle('active');
@@ -1183,6 +1752,13 @@
                 if (e.target === newChatModal) {
                     hideNewChatModal();
                 }
+            });
+            
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                handleLogin(email, password);
             });
             
             // Search functionality
@@ -1225,72 +1801,11 @@
             });
         }
 
-        // Handle login
-async function handleLogin(email, password) {
-    try {
-        setButtonLoading(loginButton, true);
-        
-        const persistence = rememberMe.checked ? 
-            browserLocalPersistence : browserSessionPersistence;
-        
-        await setPersistence(auth, persistence);
-        
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        showSuccess('Login realizado com sucesso!');
-        
-        // REDIRECIONAMENTO AUTOMÁTICO - LINHA ADICIONADA
-        setTimeout(() => {
-            window.location.href = 'main.html';
-        }, 1500);
-        
-    } catch (error) {
-        // ... tratamento de erro
-    } finally {
-        setButtonLoading(loginButton, false);
-    }
-}
-
-// Handle registration  
-async function handleRegistration(name, email, password) {
-    try {
-        setButtonLoading(registerButton, true);
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        
-        await updateProfile(userCredential.user, {
-            displayName: name
-        });
-        
-        showSuccess('Conta criada com sucesso! Redirecionando...');
-        
-        // REDIRECIONAMENTO AUTOMÁTICO - LINHA ADICIONADA
-        setTimeout(() => {
-            window.location.href = 'main.html';
-        }, 1500);
-        
-    } catch (error) {
-        // ... tratamento de erro
-    } finally {
-        setButtonLoading(registerButton, false);
-    }
-}
-
-// Verificar se o usuário está autenticado
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-const auth = getAuth();
-
-onAuthStateChanged(auth, (user) => {
-    if (!user) {
-        // Se não estiver logado, redireciona para o login
-        window.location.href = 'index.html';
-    } else {
-        // Se estiver logado, carrega a aplicação normalmente
-        initApp();
-    }
-});
-        
         // Initialize the app
-        document.addEventListener('DOMContentLoaded', initApp);
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+            createParticles();
+        });
     </script>
 </body>
 </html>
