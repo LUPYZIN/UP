@@ -40,7 +40,9 @@
 
         .auth-container {
             width: 100%;
-            max-width: 480px;
+            max-width: 900px; /* Aumentei a largura máxima */
+            display: flex;
+            flex-direction: column;
             animation: fadeIn 0.8s ease;
         }
 
@@ -51,11 +53,14 @@
 
         .auth-card {
             background-color: var(--dark-bg);
-            border-radius: 8px;
-            padding: 32px;
+            border-radius: 12px; /* Aumentei o border-radius */
+            padding: 40px; /* Aumentei o padding */
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .auth-card::before {
@@ -70,41 +75,42 @@
 
         .logo {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px; /* Aumentei a margem */
         }
 
         .logo h1 {
-            font-size: 24px;
+            font-size: 32px; /* Aumentei o tamanho da fonte */
             font-weight: 700;
             background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
             color: transparent;
-            margin-bottom: 8px;
+            margin-bottom: 10px; /* Aumentei a margem */
         }
 
         .logo p {
             color: var(--text-secondary);
-            font-size: 16px;
+            font-size: 18px; /* Aumentei o tamanho da fonte */
         }
 
         .auth-tabs {
             display: flex;
-            margin-bottom: 24px;
+            margin-bottom: 30px; /* Aumentei a margem */
             background-color: var(--darker-bg);
-            border-radius: 4px;
-            padding: 4px;
+            border-radius: 6px; /* Aumentei o border-radius */
+            padding: 6px; /* Aumentei o padding */
         }
 
         .auth-tab {
             flex: 1;
-            padding: 10px;
+            padding: 12px; /* Aumentei o padding */
             text-align: center;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 6px; /* Aumentei o border-radius */
             transition: var(--transition);
             font-weight: 500;
+            font-size: 16px; /* Aumentei o tamanho da fonte */
         }
 
         .auth-tab.active {
@@ -114,10 +120,12 @@
 
         .auth-form {
             display: none;
+            flex: 1;
         }
 
         .auth-form.active {
-            display: block;
+            display: flex;
+            flex-direction: column;
             animation: slideIn 0.4s ease;
         }
 
@@ -127,14 +135,14 @@
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px; /* Aumentei a margem */
             position: relative;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
-            font-size: 12px;
+            margin-bottom: 10px; /* Aumentei a margem */
+            font-size: 14px; /* Aumentei o tamanho da fonte */
             font-weight: 700;
             color: var(--text-secondary);
             text-transform: uppercase;
@@ -152,14 +160,15 @@
             transform: translateY(-50%);
             color: var(--text-secondary);
             transition: var(--transition);
+            font-size: 18px; /* Aumentei o tamanho do ícone */
         }
 
         .input-with-icon input {
             width: 100%;
-            padding: 12px 16px 12px 44px;
+            padding: 16px 16px 16px 50px; /* Aumentei o padding */
             background-color: var(--darkest-bg);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
+            border-radius: 6px; /* Aumentei o border-radius */
             color: var(--text-primary);
             font-size: 16px;
             transition: var(--transition);
@@ -183,6 +192,7 @@
             color: var(--text-secondary);
             cursor: pointer;
             transition: var(--transition);
+            font-size: 18px; /* Aumentei o tamanho do ícone */
         }
 
         .password-toggle:hover {
@@ -193,19 +203,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            font-size: 14px;
+            margin-bottom: 24px; /* Aumentei a margem */
+            font-size: 16px; /* Aumentei o tamanho da fonte */
         }
 
         .remember-me {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px; /* Aumentei o gap */
         }
 
         .remember-me input {
-            width: 16px;
-            height: 16px;
+            width: 18px; /* Aumentei o tamanho */
+            height: 18px; /* Aumentei o tamanho */
             accent-color: var(--primary-color);
         }
 
@@ -222,9 +232,9 @@
 
         .btn {
             width: 100%;
-            padding: 14px;
+            padding: 16px; /* Aumentei o padding */
             border: none;
-            border-radius: 4px;
+            border-radius: 6px; /* Aumentei o border-radius */
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
@@ -232,7 +242,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
+            gap: 10px; /* Aumentei o gap */
         }
 
         .btn-primary {
@@ -249,7 +259,7 @@
         .btn-google {
             background-color: white;
             color: #333;
-            margin-top: 12px;
+            margin-top: 16px; /* Aumentei a margem */
         }
 
         .btn-google:hover {
@@ -261,9 +271,9 @@
         .divider {
             display: flex;
             align-items: center;
-            margin: 24px 0;
+            margin: 30px 0; /* Aumentei a margem */
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 16px; /* Aumentei o tamanho da fonte */
         }
 
         .divider::before,
@@ -275,13 +285,13 @@
         }
 
         .divider span {
-            padding: 0 16px;
+            padding: 0 20px; /* Aumentei o padding */
         }
 
         .auth-footer {
             text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
+            margin-top: 24px; /* Aumentei a margem */
+            font-size: 16px; /* Aumentei o tamanho da fonte */
             color: var(--text-secondary);
         }
 
@@ -300,10 +310,10 @@
             background-color: rgba(237, 66, 69, 0.1);
             border: 1px solid rgba(237, 66, 69, 0.3);
             color: var(--error);
-            padding: 12px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            font-size: 14px;
+            padding: 16px; /* Aumentei o padding */
+            border-radius: 6px; /* Aumentei o border-radius */
+            margin-bottom: 24px; /* Aumentei a margem */
+            font-size: 16px; /* Aumentei o tamanho da fonte */
             display: none;
             animation: shake 0.5s ease;
         }
@@ -318,10 +328,10 @@
             background-color: rgba(59, 165, 93, 0.1);
             border: 1px solid rgba(59, 165, 93, 0.3);
             color: var(--success);
-            padding: 12px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            font-size: 14px;
+            padding: 16px; /* Aumentei o padding */
+            border-radius: 6px; /* Aumentei o border-radius */
+            margin-bottom: 24px; /* Aumentei a margem */
+            font-size: 16px; /* Aumentei o tamanho da fonte */
             display: none;
         }
 
@@ -367,14 +377,14 @@
         .features {
             display: flex;
             justify-content: space-between;
-            margin: 25px 0;
+            margin: 30px 0; /* Aumentei a margem */
             text-align: center;
         }
 
         .feature {
             flex: 1;
-            padding: 15px;
-            margin: 0 5px;
+            padding: 20px; /* Aumentei o padding */
+            margin: 0 10px; /* Aumentei a margem */
             background: rgba(255, 255, 255, 0.05);
             border-radius: 8px;
             transition: var(--transition);
@@ -386,33 +396,33 @@
         }
 
         .feature i {
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 28px; /* Aumentei o tamanho do ícone */
+            margin-bottom: 15px; /* Aumentei a margem */
             color: var(--primary-light);
         }
 
         .feature h3 {
-            font-size: 14px;
-            margin-bottom: 5px;
+            font-size: 16px; /* Aumentei o tamanho da fonte */
+            margin-bottom: 8px; /* Aumentei a margem */
         }
 
         .feature p {
-            font-size: 12px;
+            font-size: 14px; /* Aumentei o tamanho da fonte */
             color: var(--text-secondary);
         }
 
         .password-strength {
-            margin-top: 8px;
-            height: 4px;
+            margin-top: 10px; /* Aumentei a margem */
+            height: 6px; /* Aumentei a altura */
             background-color: var(--darkest-bg);
-            border-radius: 2px;
+            border-radius: 3px; /* Aumentei o border-radius */
             overflow: hidden;
         }
 
         .password-strength-bar {
             height: 100%;
             width: 0%;
-            border-radius: 2px;
+            border-radius: 3px; /* Aumentei o border-radius */
             transition: width 0.3s ease;
         }
 
@@ -434,14 +444,16 @@
         .terms {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 20px;
-            font-size: 14px;
+            margin-bottom: 24px; /* Aumentei a margem */
+            font-size: 16px; /* Aumentei o tamanho da fonte */
         }
 
         .terms input {
-            margin-right: 10px;
+            margin-right: 12px; /* Aumentei a margem */
             margin-top: 3px;
             accent-color: var(--primary-color);
+            width: 18px; /* Aumentei o tamanho */
+            height: 18px; /* Aumentei o tamanho */
         }
 
         .terms label {
@@ -481,10 +493,10 @@
         }
 
         .progress-bar {
-            height: 4px;
+            height: 6px; /* Aumentei a altura */
             background: var(--darker-bg);
-            border-radius: 2px;
-            margin-top: 10px;
+            border-radius: 3px; /* Aumentei o border-radius */
+            margin-top: 15px; /* Aumentei a margem */
             overflow: hidden;
             display: none;
         }
@@ -493,18 +505,19 @@
             height: 100%;
             width: 0%;
             background: linear-gradient(90deg, var(--primary-color), var(--success));
-            border-radius: 2px;
+            border-radius: 3px; /* Aumentei o border-radius */
             transition: width 0.5s ease;
         }
 
         .welcome-message {
             text-align: center;
-            margin-bottom: 20px;
-            padding: 15px;
+            margin-bottom: 30px; /* Aumentei a margem */
+            padding: 20px; /* Aumentei o padding */
             background: rgba(88, 101, 242, 0.1);
             border-radius: 8px;
             border-left: 4px solid var(--primary-color);
             animation: pulse 2s infinite;
+            font-size: 16px; /* Aumentei o tamanho da fonte */
         }
 
         @keyframes pulse {
@@ -513,22 +526,92 @@
             100% { box-shadow: 0 0 0 0 rgba(88, 101, 242, 0); }
         }
 
-        /* Responsive */
-        @media (max-width: 480px) {
+        /* Layout responsivo melhorado */
+        @media (min-width: 768px) {
+            .auth-container {
+                flex-direction: row;
+                gap: 30px;
+                max-width: 1000px;
+            }
+            
             .auth-card {
-                padding: 24px;
+                min-height: 650px;
+            }
+            
+            .features {
+                margin-top: auto;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .auth-card {
+                padding: 30px 25px;
             }
             
             .form-options {
                 flex-direction: column;
-                gap: 12px;
+                gap: 15px;
                 align-items: flex-start;
             }
             
             .features {
                 flex-direction: column;
-                gap: 10px;
+                gap: 15px;
             }
+            
+            .feature {
+                margin: 0;
+            }
+            
+            .logo h1 {
+                font-size: 28px;
+            }
+            
+            .logo p {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 25px 20px;
+            }
+            
+            .logo h1 {
+                font-size: 24px;
+            }
+            
+            .logo p {
+                font-size: 14px;
+            }
+            
+            .auth-tab {
+                padding: 10px;
+                font-size: 14px;
+            }
+            
+            .input-with-icon input {
+                padding: 14px 14px 14px 45px;
+            }
+            
+            .btn {
+                padding: 14px;
+            }
+        }
+
+        /* Melhorias de acessibilidade */
+        .btn:focus, 
+        .auth-tab:focus,
+        .input-with-icon input:focus,
+        .password-toggle:focus {
+            outline: 2px solid var(--primary-light);
+            outline-offset: 2px;
+        }
+
+        /* Melhorias visuais para inputs */
+        .input-with-icon input::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -679,18 +762,18 @@
             <div class="features">
                 <div class="feature">
                     <i class="fas fa-users"></i>
-                    <h3>Comunidade</h3>
-                    <p>Conecte-se com pessoas</p>
+                    <h3>Comunidade Ativa</h3>
+                    <p>Conecte-se com milhares de pessoas</p>
                 </div>
                 <div class="feature">
                     <i class="fas fa-bolt"></i>
-                    <h3>Rápido</h3>
-                    <p>Experiência fluida</p>
+                    <h3>Rápido e Fluido</h3>
+                    <p>Experiência de usuário otimizada</p>
                 </div>
                 <div class="feature">
                     <i class="fas fa-shield-alt"></i>
-                    <h3>Seguro</h3>
-                    <p>Seus dados protegidos</p>
+                    <h3>Segurança Máxima</h3>
+                    <p>Seus dados sempre protegidos</p>
                 </div>
             </div>
         </div>
