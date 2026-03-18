@@ -3,28 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌀 TWITCH MULTIVIEW • AuroraPIY • Proxy Simulator</title>
+    <title>🌀 TWITCH ULTRA • 15 CAMADAS • PROXY SIMULATOR</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', monospace;
+            font-family: 'Segoe UI', system-ui;
         }
 
         body {
+            background: #030014;
             min-height: 100vh;
-            background: #0a0c0f;
-            padding: 20px;
+            padding: 10px;
         }
 
-        .purple-bg {
+        .cyber-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 30%, #4b0082, #0a0c0f);
+            background: 
+                linear-gradient(45deg, rgba(100, 0, 255, 0.1) 0%, transparent 70%),
+                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.03) 0px, transparent 2px, rgba(255, 0, 255, 0.03) 3px);
             pointer-events: none;
             z-index: 0;
         }
@@ -32,153 +34,137 @@
         .header {
             position: relative;
             z-index: 10;
-            background: rgba(75, 0, 130, 0.8);
-            border: 2px solid #9147ff;
-            border-radius: 10px;
+            background: rgba(10, 0, 20, 0.8);
+            backdrop-filter: blur(10px);
+            border: 2px solid #a020f0;
+            border-radius: 20px;
             padding: 20px;
-            margin-bottom: 30px;
-            color: #fff;
-            box-shadow: 0 0 30px rgba(145, 71, 255, 0.5);
-            backdrop-filter: blur(5px);
-        }
-
-        .stats-panel {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
             margin-bottom: 20px;
+            box-shadow: 0 0 50px rgba(160, 32, 240, 0.5);
         }
 
-        .stat-box {
-            background: rgba(20, 0, 30, 0.9);
-            border: 1px solid #9147ff;
-            padding: 15px;
-            border-radius: 8px;
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat {
+            background: rgba(20, 0, 40, 0.9);
+            border: 1px solid #a020f0;
+            border-radius: 12px;
+            padding: 12px;
             text-align: center;
         }
 
-        .stat-box .label {
-            color: #b87cff;
-            opacity: 0.9;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .stat-box .value {
+        .stat-value {
             font-size: 2rem;
             font-weight: bold;
-            color: #9147ff;
-            text-shadow: 0 0 15px #9147ff;
+            color: #a020f0;
+            text-shadow: 0 0 20px #a020f0;
             font-family: 'Courier New', monospace;
         }
 
-        .video-grid {
+        .stat-label {
+            color: #b8a0ff;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
             position: relative;
             z-index: 10;
         }
 
-        .video-card {
-            background: rgba(20, 0, 30, 0.95);
-            border: 2px solid #9147ff;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 0 25px rgba(145, 71, 255, 0.3);
-            transition: all 0.3s ease;
-            animation: purplePulse 3s infinite;
+        .stream-card {
+            background: rgba(8, 0, 16, 0.95);
+            border: 2px solid #a020f0;
+            border-radius: 16px;
+            padding: 10px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            transition: all 0.3s;
+            animation: cardPulse 4s infinite;
         }
 
-        @keyframes purplePulse {
-            0% { box-shadow: 0 0 20px rgba(145, 71, 255, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(145, 71, 255, 0.6); }
-            100% { box-shadow: 0 0 20px rgba(145, 71, 255, 0.3); }
+        @keyframes cardPulse {
+            0% { border-color: #a020f0; box-shadow: 0 0 20px #a020f0; }
+            50% { border-color: #ff44cc; box-shadow: 0 0 40px #ff44cc; }
+            100% { border-color: #a020f0; box-shadow: 0 0 20px #a020f0; }
         }
 
-        .card-header {
+        .stream-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #9147ff;
+            margin-bottom: 8px;
+            padding: 4px 8px;
+            background: rgba(160, 32, 240, 0.1);
+            border-radius: 30px;
+            font-size: 0.7rem;
         }
 
-        .window-title {
-            color: #9147ff;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        .ip-badge {
-            background: #000;
-            color: #9147ff;
-            padding: 4px 12px;
-            border-radius: 20px;
+        .ip-info {
             font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
-            border: 1px solid #9147ff;
+            color: #0ff;
+            font-size: 0.65rem;
+            background: #000;
+            padding: 2px 6px;
+            border-radius: 12px;
+            border: 1px solid #a020f0;
         }
 
-        .video-container {
+        .country-badge {
+            background: #a020f0;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-size: 0.6rem;
+        }
+
+        .video-wrapper {
             position: relative;
             width: 100%;
             aspect-ratio: 16/9;
-            border: 2px solid #9147ff;
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
-            margin: 10px 0;
+            border: 1px solid #a020f0;
         }
 
-        .video-container iframe {
+        .video-wrapper iframe {
             width: 100%;
             height: 100%;
             border: none;
+            pointer-events: none; /* Evita cliques acidentais */
         }
 
-        .channel-info {
+        .stream-footer {
+            margin-top: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px;
-            padding: 8px;
-            background: rgba(75, 0, 130, 0.3);
-            border-radius: 6px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
+            font-size: 0.65rem;
+            color: #b8a0ff;
         }
 
-        .live-badge {
+        .live-indicator {
             background: #ff0000;
             color: white;
             padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
+            border-radius: 12px;
             font-weight: bold;
-            animation: blink 1.5s infinite;
+            font-size: 0.6rem;
+            animation: livePulse 1.5s infinite;
         }
 
-        @keyframes blink {
+        @keyframes livePulse {
             0% { opacity: 1; }
             50% { opacity: 0.7; }
             100% { opacity: 1; }
-        }
-
-        .viewer-count {
-            color: #9147ff;
-        }
-
-        .reload-timer {
-            background: #000;
-            color: #9147ff;
-            padding: 5px 10px;
-            border-radius: 4px;
-            text-align: center;
-            margin-top: 8px;
-            font-size: 0.8rem;
-            border: 1px dashed #9147ff;
         }
 
         .control-panel {
@@ -191,240 +177,747 @@
         }
 
         .btn {
-            background: rgba(75, 0, 130, 0.9);
-            border: 2px solid #9147ff;
+            background: linear-gradient(45deg, #a020f0, #ff44cc);
+            border: none;
             color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 15px 30px;
+            border-radius: 50px;
             font-weight: bold;
             cursor: pointer;
+            box-shadow: 0 0 30px #a020f0;
             transition: all 0.3s;
-            backdrop-filter: blur(5px);
             font-size: 1rem;
-            letter-spacing: 1px;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
         .btn:hover {
-            background: #9147ff;
-            color: #000;
-            box-shadow: 0 0 30px #9147ff;
+            transform: scale(1.1);
+            box-shadow: 0 0 50px #ff44cc;
         }
 
-        .twitch-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .btn.secondary {
+            background: linear-gradient(45deg, #00cc99, #0099ff);
+            right: 180px;
         }
 
-        .twitch-logo img {
-            width: 30px;
-            height: 30px;
+        /* Overlay de rede */
+        .network-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(160,32,240,0.2), transparent 70%);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .connection-line {
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #a020f0, transparent);
+            left: 50%;
+            animation: moveLine 8s infinite linear;
+        }
+
+        @keyframes moveLine {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
         }
     </style>
 </head>
 <body>
-    <div class="purple-bg"></div>
+    <div class="cyber-bg"></div>
+    <div class="network-overlay"></div>
 
     <div class="header">
-        <div class="twitch-logo">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="#9147ff">
-                <path d="M11.64 5.93h1.43v4.28h-1.43m3.93-4.28H17v4.28h-1.43M7 2L3.43 5.57v12.86h4.28V22l3.58-3.57h2.86L20.57 12V2m-1.43 9.29l-2.85 2.85h-2.86l-2.5 2.5v-2.5H7.71V3.43h11.43v7.86z"/>
-            </svg>
-            <h1>🌀 AURORAPIY • MULTIVIEW PROXY SIMULATOR 🌀</h1>
-        </div>
+        <h1 style="color: white; text-align: center; font-size: 2rem; text-shadow: 0 0 20px #a020f0;">
+            🌐 TWITCH • 15× AURORAPIY • PROXY ROTATION
+        </h1>
         
-        <div class="stats-panel">
-            <div class="stat-box">
-                <div class="label">STREAMS ATIVAS</div>
-                <div class="value" id="activeStreams">15</div>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="activeCount">15</div>
+                <div class="stat-label">STREAMS ATIVAS</div>
             </div>
-            <div class="stat-box">
-                <div class="label">PAÍSES</div>
-                <div class="value" id="countries">12</div>
+            <div class="stat">
+                <div class="stat-value" id="ipCount">15</div>
+                <div class="stat-label">IPS ÚNICOS</div>
             </div>
-            <div class="stat-box">
-                <div class="label">VIEWERS SIM.</div>
-                <div class="value" id="viewers">0</div>
+            <div class="stat">
+                <div class="stat-value" id="countryCount">12</div>
+                <div class="stat-label">PAÍSES</div>
             </div>
-            <div class="stat-box">
-                <div class="label">STATUS</div>
-                <div class="value" id="status">🟢 LIVE</div>
+            <div class="stat">
+                <div class="stat-value" id="rotationCount">0</div>
+                <div class="stat-label">ROTAÇÕES</div>
             </div>
         </div>
     </div>
 
-    <div class="video-grid" id="videoGrid"></div>
+    <div class="grid-container" id="streamGrid"></div>
 
     <div class="control-panel">
-        <button class="btn" id="rotateAll">🔄 ROTACIONAR IPS</button>
-        <button class="btn" id="newIPs">🌐 NOVOS IPS</button>
+        <button class="btn secondary" id="rotateBtn">🔄 ROTACIONAR AGORA</button>
+        <button class="btn" id="refreshBtn">✨ NOVOS IPS</button>
     </div>
 
     <script>
-        const CHANNEL_NAME = 'aurorapiy';
+        const CHANNEL = 'aurorapiy';
         const QUANTIDADE = 15;
-        let rotacoes = 0;
-        let viewersSimulados = 0;
         
-        // Banco de IPs simulados por país
-        const ipPools = {
-            '🇺🇸 EUA': ['45.82.134.' + Math.floor(Math.random() * 255), '67.205.156.' + Math.floor(Math.random() * 255)],
-            '🇬🇧 UK': ['89.105.213.' + Math.floor(Math.random() * 255), '81.174.23.' + Math.floor(Math.random() * 255)],
-            '🇩🇪 Alemanha': ['85.214.78.' + Math.floor(Math.random() * 255), '87.139.82.' + Math.floor(Math.random() * 255)],
-            '🇫🇷 França': ['82.127.34.' + Math.floor(Math.random() * 255), '92.143.67.' + Math.floor(Math.random() * 255)],
-            '🇯🇵 Japão': ['126.13.45.' + Math.floor(Math.random() * 255), '112.67.189.' + Math.floor(Math.random() * 255)],
-            '🇧🇷 Brasil': ['177.45.23.' + Math.floor(Math.random() * 255), '189.56.78.' + Math.floor(Math.random() * 255)],
-            '🇨🇦 Canadá': ['64.45.67.' + Math.floor(Math.random() * 255), '67.215.34.' + Math.floor(Math.random() * 255)],
-            '🇦🇺 Austrália': ['103.87.45.' + Math.floor(Math.random() * 255), '121.56.78.' + Math.floor(Math.random() * 255)],
-            '🇳🇱 Holanda': ['82.168.34.' + Math.floor(Math.random() * 255), '94.34.67.' + Math.floor(Math.random() * 255)],
-            '🇸🇪 Suécia': ['81.89.45.' + Math.floor(Math.random() * 255), '85.56.78.' + Math.floor(Math.random() * 255)]
+        // Pool de IPs simulados (para parecer real)
+        const IP_POOL = {
+            '🇺🇸 EUA': [
+                '45.82.134.{}', '67.205.156.{}', '104.168.45.{}', '208.76.89.{}', '64.45.23.{}'
+            ],
+            '🇬🇧 UK': [
+                '89.105.213.{}', '81.174.23.{}', '46.29.17.{}', '92.143.67.{}', '78.114.34.{}'
+            ],
+            '🇩🇪 Alemanha': [
+                '85.214.78.{}', '87.139.82.{}', '91.65.189.{}', '93.45.23.{}', '82.78.56.{}'
+            ],
+            '🇫🇷 França': [
+                '82.127.34.{}', '92.143.67.{}', '78.114.189.{}', '45.56.78.{}', '89.34.23.{}'
+            ],
+            '🇯🇵 Japão': [
+                '126.13.45.{}', '112.67.189.{}', '61.124.37.{}', '103.56.78.{}', '121.89.34.{}'
+            ],
+            '🇧🇷 Brasil': [
+                '177.45.23.{}', '189.56.78.{}', '200.145.89.{}', '179.34.67.{}', '191.23.45.{}'
+            ],
+            '🇨🇦 Canadá': [
+                '64.45.67.{}', '67.215.34.{}', '208.76.89.{}', '45.78.23.{}', '142.56.89.{}'
+            ],
+            '🇦🇺 Austrália': [
+                '103.87.45.{}', '121.56.78.{}', '203.45.23.{}', '112.78.34.{}', '149.56.89.{}'
+            ],
+            '🇳🇱 Holanda': [
+                '82.168.34.{}', '94.34.67.{}', '86.78.45.{}', '45.67.89.{}', '77.89.34.{}'
+            ],
+            '🇸🇪 Suécia': [
+                '81.89.45.{}', '85.56.78.{}', '89.34.67.{}', '95.45.23.{}', '78.89.56.{}'
+            ],
+            '🇰🇷 Coreia': [
+                '112.45.67.{}', '121.78.89.{}', '103.56.34.{}', '61.89.45.{}', '59.34.78.{}'
+            ],
+            '🇮🇳 Índia': [
+                '103.45.67.{}', '121.56.89.{}', '182.78.34.{}', '203.45.89.{}', '59.67.23.{}'
+            ]
         };
 
-        const paises = Object.keys(ipPools);
+        const PAISES = Object.keys(IP_POOL);
+        let rotacoes = 0;
+        let ipAtualizacoes = 0;
+        
+        // Cache dos IPs atuais
+        let currentIPs = [];
 
-        function generateRandomIP() {
-            const pais = paises[Math.floor(Math.random() * paises.length)];
-            const pool = ipPools[pais];
-            const ipBase = pool[Math.floor(Math.random() * pool.length)];
+        function generateIP() {
+            const pais = PAISES[Math.floor(Math.random() * PAISES.length)];
+            const template = IP_POOL[pais][Math.floor(Math.random() * IP_POOL[pais].length)];
             const lastOctet = Math.floor(Math.random() * 255);
+            const ip = template.replace('{}', lastOctet);
+            
             return {
-                ip: ipBase.includes('.') ? ipBase.split('.')[0] + '.' + ipBase.split('.')[1] + '.' + ipBase.split('.')[2] + '.' + lastOctet : ipBase,
+                ip: ip,
                 pais: pais,
-                ping: Math.floor(Math.random() * 150) + 20,
-                viewers: Math.floor(Math.random() * 50) + 10
+                cidade: ['NY', 'LDN', 'BER', 'PAR', 'TKO', 'SAO', 'SYD'][Math.floor(Math.random() * 7)],
+                provedor: ['Verizon', 'BT', 'Deutsche Telekom', 'Orange', 'NTT', 'Vivo', 'Telstra'][Math.floor(Math.random() * 7)],
+                ping: Math.floor(Math.random() * 80) + 20
             };
         }
 
-        function createStreamCard(index) {
+        function createStreamCard(index, ipInfo) {
             const card = document.createElement('div');
-            card.className = 'video-card';
+            card.className = 'stream-card';
             
-            const ipInfo = generateRandomIP();
-            viewersSimulados += ipInfo.viewers;
-            
-            // Twitch embed URL - modo mais compatível
-            const twitchUrl = `https://player.twitch.tv/?channel=${CHANNEL_NAME}&parent=${window.location.hostname}&muted=true`;
+            // URL da Twitch com parâmetros avançados
+            const twitchUrl = `https://player.twitch.tv/?channel=${CHANNEL}&parent=${window.location.hostname}&muted=true&controls=false&time=${Date.now()}`;
             
             card.innerHTML = `
-                <div class="card-header">
-                    <span class="window-title">📺 STREAM #${String(index + 1).padStart(2, '0')}</span>
-                    <span class="ip-badge">${ipInfo.ip}</span>
+                <div class="stream-header">
+                    <span class="country-badge">${ipInfo.pais}</span>
+                    <span class="ip-info">${ipInfo.ip}</span>
                 </div>
-                <div class="video-container">
+                <div class="video-wrapper">
                     <iframe src="${twitchUrl}" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen="false"
-                            title="AuroraPIY Twitch"></iframe>
+                            allow="autoplay; encrypted-media"
+                            sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
+                            loading="lazy"></iframe>
                 </div>
-                <div class="channel-info">
-                    <span class="country-flag">${ipInfo.pais}</span>
-                    <span class="live-badge">🔴 LIVE</span>
-                    <span class="viewer-count">👥 ${ipInfo.viewers} viewers</span>
+                <div class="stream-footer">
+                    <span>📶 ${ipInfo.ping}ms</span>
+                    <span class="live-indicator">🔴 LIVE</span>
+                    <span>🖥️ ${ipInfo.provedor}</span>
                 </div>
-                <div class="reload-timer" id="timer-${index}">
-                    ⏳ Próximo IP em: ${Math.floor(Math.random() * 60) + 30}s
+                <div style="font-size:0.6rem; text-align:center; margin-top:5px; color:#888; font-family:monospace;">
+                    ⏱️ ${Math.floor(Math.random()*60)+30}s
                 </div>
             `;
             
             return card;
         }
 
-        function updateAllIPs() {
-            viewersSimulados = 0;
-            const cards = document.querySelectorAll('.video-card');
+        function generateAllIPs() {
+            const newIPs = [];
+            for (let i = 0; i < QUANTIDADE; i++) {
+                newIPs.push(generateIP());
+            }
+            return newIPs;
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('streamGrid');
+            grid.innerHTML = '';
+            
+            currentIPs = generateAllIPs();
+            
+            currentIPs.forEach((ipInfo, index) => {
+                grid.appendChild(createStreamCard(index, ipInfo));
+            });
+            
+            updateStats();
+        }
+
+        function rotateIPs() {
+            const cards = document.querySelectorAll('.stream-card');
+            const newIPs = generateAllIPs();
             
             cards.forEach((card, index) => {
-                const ipInfo = generateRandomIP();
-                const ipBadge = card.querySelector('.ip-badge');
-                const channelInfo = card.querySelector('.channel-info');
-                const timer = card.querySelector('.reload-timer');
+                const ipInfo = newIPs[index];
                 
-                if (ipBadge) ipBadge.textContent = ipInfo.ip;
-                if (channelInfo) {
-                    channelInfo.innerHTML = `
-                        <span class="country-flag">${ipInfo.pais}</span>
-                        <span class="live-badge">🔴 LIVE</span>
-                        <span class="viewer-count">👥 ${ipInfo.viewers} viewers</span>
-                    `;
-                }
-                if (timer) {
-                    const segundos = Math.floor(Math.random() * 60) + 30;
-                    timer.textContent = `⏳ Próximo IP em: ${segundos}s`;
-                }
+                // Atualiza header
+                const header = card.querySelector('.stream-header');
+                header.innerHTML = `
+                    <span class="country-badge">${ipInfo.pais}</span>
+                    <span class="ip-info">${ipInfo.ip}</span>
+                `;
                 
-                viewersSimulados += ipInfo.viewers;
+                // Atualiza footer
+                const footer = card.querySelector('.stream-footer');
+                footer.innerHTML = `
+                    <span>📶 ${ipInfo.ping}ms</span>
+                    <span class="live-indicator">🔴 LIVE</span>
+                    <span>🖥️ ${ipInfo.provedor}</span>
+                `;
+                
+                // Atualiza iframe (recarrega a stream)
+                const iframe = card.querySelector('iframe');
+                const parent = window.location.hostname;
+                iframe.src = `https://player.twitch.tv/?channel=${CHANNEL}&parent=${parent}&muted=true&time=${Date.now()}`;
             });
             
             rotacoes++;
-            document.getElementById('viewers').textContent = viewersSimulados;
-            document.getElementById('rotations').textContent = rotacoes;
-            
-            // Atualiza os iframes (recarrega as streams)
-            const iframes = document.querySelectorAll('iframe');
-            iframes.forEach((iframe, i) => {
-                // Recarrega o iframe da Twitch (precisa de um truque para não quebrar)
-                const parent = window.location.hostname;
-                iframe.src = `https://player.twitch.tv/?channel=${CHANNEL_NAME}&parent=${parent}&t=${Date.now()}`;
-            });
+            ipAtualizacoes += QUANTIDADE;
+            updateStats();
         }
 
-        function initializeGrid() {
-            const grid = document.getElementById('videoGrid');
-            grid.innerHTML = '';
-            viewersSimulados = 0;
+        function updateStats() {
+            document.getElementById('activeCount').textContent = QUANTIDADE;
+            document.getElementById('ipCount').textContent = ipAtualizacoes;
             
-            for (let i = 0; i < QUANTIDADE; i++) {
-                const card = createStreamCard(i);
-                grid.appendChild(card);
-            }
+            // Conta países únicos
+            const paisesUnicos = new Set(currentIPs.map(ip => ip.pais)).size;
+            document.getElementById('countryCount').textContent = paisesUnicos;
             
-            document.getElementById('activeStreams').textContent = QUANTIDADE;
-            document.getElementById('countries').textContent = Object.keys(ipPools).length;
-            document.getElementById('viewers').textContent = viewersSimulados;
-            document.getElementById('rotations').textContent = rotacoes;
-        }
-
-        function startAutoRotation() {
-            setInterval(() => {
-                updateAllIPs();
-            }, Math.floor(Math.random() * 60000) + 30000);
+            document.getElementById('rotationCount').textContent = rotacoes;
         }
 
         // Event listeners
-        document.getElementById('rotateAll').addEventListener('click', () => {
-            updateAllIPs();
+        document.getElementById('rotateBtn').addEventListener('click', () => {
+            rotateIPs();
         });
 
-        document.getElementById('newIPs').addEventListener('click', () => {
-            // Gera novos pools de IPs
-            Object.keys(ipPools).forEach(pais => {
-                ipPools[pais] = [
-                    Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255),
-                    Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255)
-                ];
-            });
-            updateAllIPs();
+        document.getElementById('refreshBtn').addEventListener('click', () => {
+            renderGrid();
         });
+
+        // Auto-rotation a cada 45-90 segundos
+        function startAutoRotation() {
+            setInterval(() => {
+                rotateIPs();
+            }, Math.floor(Math.random() * 45000) + 45000);
+        }
 
         // Inicialização
-        initializeGrid();
+        renderGrid();
         startAutoRotation();
 
-        // Atualiza timers visualmente
+        // Simula conexões de rede
         setInterval(() => {
-            const timers = document.querySelectorAll('.reload-timer');
-            timers.forEach(timer => {
-                const text = timer.textContent;
-                const match = text.match(/(\d+)/);
-                if (match) {
-                    let segundos = parseInt(match[0]);
-                    if (segundos > 0) {
-                        segundos--;
-                        timer.textContent = `⏳ Próximo IP em: ${segundos}s`;
-                    }
+            document.querySelectorAll('.stream-card').forEach(card => {
+                const pingSpan = card.querySelector('.stream-footer span:first-child');
+                if (pingSpan) {
+                    const variacao = Math.floor(Math.random() * 20) - 10;
+                    const pingAtual = parseInt(pingSpan.textContent.replace('📶 ', '').replace('ms', ''));
+                    const novoPing = Math.max(20, pingAtual + variacao);
+                    pingSpan.textContent = `📶 ${novoPing}ms`;
                 }
             });
-        }, 1000);
+        }, 5000);
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌀 TWITCH ULTRA • 15 CAMADAS • PROXY SIMULATOR</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui;
+        }
+
+        body {
+            background: #030014;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, rgba(100, 0, 255, 0.1) 0%, transparent 70%),
+                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.03) 0px, transparent 2px, rgba(255, 0, 255, 0.03) 3px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header {
+            position: relative;
+            z-index: 10;
+            background: rgba(10, 0, 20, 0.8);
+            backdrop-filter: blur(10px);
+            border: 2px solid #a020f0;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 50px rgba(160, 32, 240, 0.5);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat {
+            background: rgba(20, 0, 40, 0.9);
+            border: 1px solid #a020f0;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #a020f0;
+            text-shadow: 0 0 20px #a020f0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .stat-label {
+            color: #b8a0ff;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .stream-card {
+            background: rgba(8, 0, 16, 0.95);
+            border: 2px solid #a020f0;
+            border-radius: 16px;
+            padding: 10px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            transition: all 0.3s;
+            animation: cardPulse 4s infinite;
+        }
+
+        @keyframes cardPulse {
+            0% { border-color: #a020f0; box-shadow: 0 0 20px #a020f0; }
+            50% { border-color: #ff44cc; box-shadow: 0 0 40px #ff44cc; }
+            100% { border-color: #a020f0; box-shadow: 0 0 20px #a020f0; }
+        }
+
+        .stream-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 4px 8px;
+            background: rgba(160, 32, 240, 0.1);
+            border-radius: 30px;
+            font-size: 0.7rem;
+        }
+
+        .ip-info {
+            font-family: 'Courier New', monospace;
+            color: #0ff;
+            font-size: 0.65rem;
+            background: #000;
+            padding: 2px 6px;
+            border-radius: 12px;
+            border: 1px solid #a020f0;
+        }
+
+        .country-badge {
+            background: #a020f0;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-size: 0.6rem;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #a020f0;
+        }
+
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            pointer-events: none; /* Evita cliques acidentais */
+        }
+
+        .stream-footer {
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.65rem;
+            color: #b8a0ff;
+        }
+
+        .live-indicator {
+            background: #ff0000;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.6rem;
+            animation: livePulse 1.5s infinite;
+        }
+
+        @keyframes livePulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .control-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #a020f0, #ff44cc);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 30px #a020f0;
+            transition: all 0.3s;
+            font-size: 1rem;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px #ff44cc;
+        }
+
+        .btn.secondary {
+            background: linear-gradient(45deg, #00cc99, #0099ff);
+            right: 180px;
+        }
+
+        /* Overlay de rede */
+        .network-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(160,32,240,0.2), transparent 70%);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .connection-line {
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #a020f0, transparent);
+            left: 50%;
+            animation: moveLine 8s infinite linear;
+        }
+
+        @keyframes moveLine {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-bg"></div>
+    <div class="network-overlay"></div>
+
+    <div class="header">
+        <h1 style="color: white; text-align: center; font-size: 2rem; text-shadow: 0 0 20px #a020f0;">
+            🌐 TWITCH • 15× AURORAPIY • PROXY ROTATION
+        </h1>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="activeCount">15</div>
+                <div class="stat-label">STREAMS ATIVAS</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="ipCount">15</div>
+                <div class="stat-label">IPS ÚNICOS</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="countryCount">12</div>
+                <div class="stat-label">PAÍSES</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="rotationCount">0</div>
+                <div class="stat-label">ROTAÇÕES</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-container" id="streamGrid"></div>
+
+    <div class="control-panel">
+        <button class="btn secondary" id="rotateBtn">🔄 ROTACIONAR AGORA</button>
+        <button class="btn" id="refreshBtn">✨ NOVOS IPS</button>
+    </div>
+
+    <script>
+        const CHANNEL = 'aurorapiy';
+        const QUANTIDADE = 15;
+        
+        // Pool de IPs simulados (para parecer real)
+        const IP_POOL = {
+            '🇺🇸 EUA': [
+                '45.82.134.{}', '67.205.156.{}', '104.168.45.{}', '208.76.89.{}', '64.45.23.{}'
+            ],
+            '🇬🇧 UK': [
+                '89.105.213.{}', '81.174.23.{}', '46.29.17.{}', '92.143.67.{}', '78.114.34.{}'
+            ],
+            '🇩🇪 Alemanha': [
+                '85.214.78.{}', '87.139.82.{}', '91.65.189.{}', '93.45.23.{}', '82.78.56.{}'
+            ],
+            '🇫🇷 França': [
+                '82.127.34.{}', '92.143.67.{}', '78.114.189.{}', '45.56.78.{}', '89.34.23.{}'
+            ],
+            '🇯🇵 Japão': [
+                '126.13.45.{}', '112.67.189.{}', '61.124.37.{}', '103.56.78.{}', '121.89.34.{}'
+            ],
+            '🇧🇷 Brasil': [
+                '177.45.23.{}', '189.56.78.{}', '200.145.89.{}', '179.34.67.{}', '191.23.45.{}'
+            ],
+            '🇨🇦 Canadá': [
+                '64.45.67.{}', '67.215.34.{}', '208.76.89.{}', '45.78.23.{}', '142.56.89.{}'
+            ],
+            '🇦🇺 Austrália': [
+                '103.87.45.{}', '121.56.78.{}', '203.45.23.{}', '112.78.34.{}', '149.56.89.{}'
+            ],
+            '🇳🇱 Holanda': [
+                '82.168.34.{}', '94.34.67.{}', '86.78.45.{}', '45.67.89.{}', '77.89.34.{}'
+            ],
+            '🇸🇪 Suécia': [
+                '81.89.45.{}', '85.56.78.{}', '89.34.67.{}', '95.45.23.{}', '78.89.56.{}'
+            ],
+            '🇰🇷 Coreia': [
+                '112.45.67.{}', '121.78.89.{}', '103.56.34.{}', '61.89.45.{}', '59.34.78.{}'
+            ],
+            '🇮🇳 Índia': [
+                '103.45.67.{}', '121.56.89.{}', '182.78.34.{}', '203.45.89.{}', '59.67.23.{}'
+            ]
+        };
+
+        const PAISES = Object.keys(IP_POOL);
+        let rotacoes = 0;
+        let ipAtualizacoes = 0;
+        
+        // Cache dos IPs atuais
+        let currentIPs = [];
+
+        function generateIP() {
+            const pais = PAISES[Math.floor(Math.random() * PAISES.length)];
+            const template = IP_POOL[pais][Math.floor(Math.random() * IP_POOL[pais].length)];
+            const lastOctet = Math.floor(Math.random() * 255);
+            const ip = template.replace('{}', lastOctet);
+            
+            return {
+                ip: ip,
+                pais: pais,
+                cidade: ['NY', 'LDN', 'BER', 'PAR', 'TKO', 'SAO', 'SYD'][Math.floor(Math.random() * 7)],
+                provedor: ['Verizon', 'BT', 'Deutsche Telekom', 'Orange', 'NTT', 'Vivo', 'Telstra'][Math.floor(Math.random() * 7)],
+                ping: Math.floor(Math.random() * 80) + 20
+            };
+        }
+
+        function createStreamCard(index, ipInfo) {
+            const card = document.createElement('div');
+            card.className = 'stream-card';
+            
+            // URL da Twitch com parâmetros avançados
+            const twitchUrl = `https://player.twitch.tv/?channel=${CHANNEL}&parent=${window.location.hostname}&muted=true&controls=false&time=${Date.now()}`;
+            
+            card.innerHTML = `
+                <div class="stream-header">
+                    <span class="country-badge">${ipInfo.pais}</span>
+                    <span class="ip-info">${ipInfo.ip}</span>
+                </div>
+                <div class="video-wrapper">
+                    <iframe src="${twitchUrl}" 
+                            allow="autoplay; encrypted-media"
+                            sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
+                            loading="lazy"></iframe>
+                </div>
+                <div class="stream-footer">
+                    <span>📶 ${ipInfo.ping}ms</span>
+                    <span class="live-indicator">🔴 LIVE</span>
+                    <span>🖥️ ${ipInfo.provedor}</span>
+                </div>
+                <div style="font-size:0.6rem; text-align:center; margin-top:5px; color:#888; font-family:monospace;">
+                    ⏱️ ${Math.floor(Math.random()*60)+30}s
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function generateAllIPs() {
+            const newIPs = [];
+            for (let i = 0; i < QUANTIDADE; i++) {
+                newIPs.push(generateIP());
+            }
+            return newIPs;
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('streamGrid');
+            grid.innerHTML = '';
+            
+            currentIPs = generateAllIPs();
+            
+            currentIPs.forEach((ipInfo, index) => {
+                grid.appendChild(createStreamCard(index, ipInfo));
+            });
+            
+            updateStats();
+        }
+
+        function rotateIPs() {
+            const cards = document.querySelectorAll('.stream-card');
+            const newIPs = generateAllIPs();
+            
+            cards.forEach((card, index) => {
+                const ipInfo = newIPs[index];
+                
+                // Atualiza header
+                const header = card.querySelector('.stream-header');
+                header.innerHTML = `
+                    <span class="country-badge">${ipInfo.pais}</span>
+                    <span class="ip-info">${ipInfo.ip}</span>
+                `;
+                
+                // Atualiza footer
+                const footer = card.querySelector('.stream-footer');
+                footer.innerHTML = `
+                    <span>📶 ${ipInfo.ping}ms</span>
+                    <span class="live-indicator">🔴 LIVE</span>
+                    <span>🖥️ ${ipInfo.provedor}</span>
+                `;
+                
+                // Atualiza iframe (recarrega a stream)
+                const iframe = card.querySelector('iframe');
+                const parent = window.location.hostname;
+                iframe.src = `https://player.twitch.tv/?channel=${CHANNEL}&parent=${parent}&muted=true&time=${Date.now()}`;
+            });
+            
+            rotacoes++;
+            ipAtualizacoes += QUANTIDADE;
+            updateStats();
+        }
+
+        function updateStats() {
+            document.getElementById('activeCount').textContent = QUANTIDADE;
+            document.getElementById('ipCount').textContent = ipAtualizacoes;
+            
+            // Conta países únicos
+            const paisesUnicos = new Set(currentIPs.map(ip => ip.pais)).size;
+            document.getElementById('countryCount').textContent = paisesUnicos;
+            
+            document.getElementById('rotationCount').textContent = rotacoes;
+        }
+
+        // Event listeners
+        document.getElementById('rotateBtn').addEventListener('click', () => {
+            rotateIPs();
+        });
+
+        document.getElementById('refreshBtn').addEventListener('click', () => {
+            renderGrid();
+        });
+
+        // Auto-rotation a cada 45-90 segundos
+        function startAutoRotation() {
+            setInterval(() => {
+                rotateIPs();
+            }, Math.floor(Math.random() * 45000) + 45000);
+        }
+
+        // Inicialização
+        renderGrid();
+        startAutoRotation();
+
+        // Simula conexões de rede
+        setInterval(() => {
+            document.querySelectorAll('.stream-card').forEach(card => {
+                const pingSpan = card.querySelector('.stream-footer span:first-child');
+                if (pingSpan) {
+                    const variacao = Math.floor(Math.random() * 20) - 10;
+                    const pingAtual = parseInt(pingSpan.textContent.replace('📶 ', '').replace('ms', ''));
+                    const novoPing = Math.max(20, pingAtual + variacao);
+                    pingSpan.textContent = `📶 ${novoPing}ms`;
+                }
+            });
+        }, 5000);
     </script>
 </body>
 </html>
