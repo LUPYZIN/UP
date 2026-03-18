@@ -3,523 +3,428 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎬 Loop de Poppy Playtime • 10+ Janelas</title>
+    <title>🌀 TWITCH MULTIVIEW • AuroraPIY • Proxy Simulator</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            font-family: 'Segoe UI', monospace;
         }
 
         body {
             min-height: 100vh;
-            background: radial-gradient(circle at 20% 30%, #1a0b2e, #0c0a1a);
-            display: flex;
-            flex-direction: column;
+            background: #0a0c0f;
             padding: 20px;
+        }
+
+        .purple-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, #4b0082, #0a0c0f);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header {
             position: relative;
+            z-index: 10;
+            background: rgba(75, 0, 130, 0.8);
+            border: 2px solid #9147ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: #fff;
+            box-shadow: 0 0 30px rgba(145, 71, 255, 0.5);
+            backdrop-filter: blur(5px);
         }
 
-        /* cabeçalho com título e contador */
-        .top-bar {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 70, 200, 0.25);
-            border-radius: 60px;
-            padding: 16px 30px;
-            margin-bottom: 40px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(180, 0, 255, 0.3);
-        }
-
-        .title-section {
-            display: flex;
-            align-items: center;
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
+            margin-bottom: 20px;
         }
 
-        .title-section h1 {
-            font-size: 1.9rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #ff7bcf, #b380ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: 1px;
-            text-shadow: 0 0 15px #ff44cc80;
+        .stat-box {
+            background: rgba(20, 0, 30, 0.9);
+            border: 1px solid #9147ff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
         }
 
-        .badge {
-            background: #38006b;
-            border: 1px solid #ff66d0;
-            color: #ffd6f5;
-            border-radius: 40px;
-            padding: 6px 18px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            box-shadow: inset 0 2px 5px #00000055, 0 0 15px #ff33bb;
+        .stat-box .label {
+            color: #b87cff;
+            opacity: 0.9;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        .stats {
-            display: flex;
-            gap: 25px;
-            color: #ccc9f0;
-            font-weight: 500;
+        .stat-box .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #9147ff;
+            text-shadow: 0 0 15px #9147ff;
+            font-family: 'Courier New', monospace;
         }
 
-        .stats span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .stats i {
-            font-size: 1.4rem;
-            filter: drop-shadow(0 0 8px magenta);
-        }
-
-        /* grid principal das janelas */
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
-            flex: 1;
-            z-index: 2;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            position: relative;
+            z-index: 10;
         }
 
-        /* cada card = janelinha */
         .video-card {
-            background: rgba(18, 8, 31, 0.7);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border: 2px solid rgba(255, 20, 180, 0.5);
-            border-radius: 32px;
-            padding: 14px 14px 18px 14px;
-            box-shadow: 0 30px 30px -15px black, 0 0 0 1px #ff44bb33 inset, 0 0 25px #b936ee60;
-            transition: transform 0.2s ease, border-color 0.3s;
-            display: flex;
-            flex-direction: column;
+            background: rgba(20, 0, 30, 0.95);
+            border: 2px solid #9147ff;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 0 25px rgba(145, 71, 255, 0.3);
+            transition: all 0.3s ease;
+            animation: purplePulse 3s infinite;
         }
 
-        .video-card:hover {
-            transform: scale(1.02) translateY(-6px);
-            border-color: #ff90e0;
-            box-shadow: 0 35px 35px -15px #000, 0 0 30px #f0f;
+        @keyframes purplePulse {
+            0% { box-shadow: 0 0 20px rgba(145, 71, 255, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(145, 71, 255, 0.6); }
+            100% { box-shadow: 0 0 20px rgba(145, 71, 255, 0.3); }
         }
 
         .card-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 8px;
             margin-bottom: 12px;
-            padding: 0 6px;
-        }
-
-        .window-dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #ff4477;
-            box-shadow: 0 0 15px #ff4466;
-        }
-
-        .window-dot:nth-child(2) {
-            background: #ffbb33;
-            box-shadow: 0 0 12px #ffaa00;
-        }
-
-        .window-dot:nth-child(3) {
-            background: #33dd88;
-            box-shadow: 0 0 10px #22ee88;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #9147ff;
         }
 
         .window-title {
-            flex: 1;
-            text-align: right;
+            color: #9147ff;
+            font-weight: bold;
             font-size: 0.9rem;
-            color: #e0b0ff;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            text-shadow: 0 0 5px violet;
+        }
+
+        .ip-badge {
+            background: #000;
+            color: #9147ff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            border: 1px solid #9147ff;
         }
 
         .video-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 16 / 9;
-            border-radius: 20px;
+            aspect-ratio: 16/9;
+            border: 2px solid #9147ff;
+            border-radius: 8px;
             overflow: hidden;
-            border: 2px solid #ffa0e0;
-            box-shadow: 0 10px 20px #00000099;
-            background: #11001c;
+            margin: 10px 0;
         }
 
         .video-container iframe {
             width: 100%;
             height: 100%;
             border: none;
-            pointer-events: none; /* bloqueia clique acidental, mas reload funciona */
         }
 
-        /* tag de tempo aleatório */
-        .reload-timer {
-            margin-top: 12px;
+        .channel-info {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            color: #ffcef0;
-            padding: 0 6px;
-            font-size: 0.9rem;
-            font-weight: 500;
+            align-items: center;
+            margin-top: 10px;
+            padding: 8px;
+            background: rgba(75, 0, 130, 0.3);
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
         }
 
-        .timer-badge {
-            background: #2e0047;
-            border-radius: 30px;
-            padding: 4px 16px;
-            border: 1px solid #ff66bb;
-            color: #ffd7fd;
-            font-size: 0.85rem;
-            font-weight: 600;
-            box-shadow: 0 0 10px #ff3399;
+        .live-badge {
+            background: #ff0000;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            animation: blink 1.5s infinite;
         }
 
-        .reload-icon {
-            font-size: 1.3rem;
-            filter: drop-shadow(0 0 5px cyan);
-            animation: subtle-spin 8s infinite linear;
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
         }
 
-        @keyframes subtle-spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .viewer-count {
+            color: #9147ff;
         }
 
-        /* luzes de fundo flutuantes (decor) */
-        .glow-spot {
+        .reload-timer {
+            background: #000;
+            color: #9147ff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            border: 1px dashed #9147ff;
+        }
+
+        .control-panel {
             position: fixed;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle at 30% 30%, #ff33ee20, transparent 70%);
-            border-radius: 50%;
-            top: -100px;
-            left: -150px;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .glow-spot2 {
-            position: fixed;
-            bottom: -100px;
-            right: -50px;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, #7700ff30, transparent 75%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* rodapé com botão de reset manual */
-        .footer-controls {
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
             display: flex;
-            justify-content: center;
-            gap: 30px;
-            z-index: 10;
-            margin-top: 15px;
+            gap: 10px;
         }
 
-        .footer-btn {
-            background: rgba(30, 10, 40, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1.5px solid #ff77cc;
-            color: #ffe3f9;
-            padding: 14px 32px;
-            border-radius: 60px;
-            font-size: 1.2rem;
-            font-weight: 600;
+        .btn {
+            background: rgba(75, 0, 130, 0.9);
+            border: 2px solid #9147ff;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: #9147ff;
+            color: #000;
+            box-shadow: 0 0 30px #9147ff;
+        }
+
+        .twitch-logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 0 30px #c445ff;
+            gap: 10px;
         }
 
-        .footer-btn:hover {
-            background: #3f1a5c;
-            border-color: #ffaaf0;
-            box-shadow: 0 0 45px #ff66ee;
-            transform: scale(1.05);
-        }
-
-        .footer-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* mensagem de quantidade */
-        .count-message {
-            color: #cab8ff;
-            font-size: 1rem;
-            background: #00000040;
-            border-radius: 30px;
-            padding: 8px 20px;
-            border: 1px dashed #ff66b8;
+        .twitch-logo img {
+            width: 30px;
+            height: 30px;
         }
     </style>
 </head>
 <body>
+    <div class="purple-bg"></div>
 
-<div class="glow-spot"></div>
-<div class="glow-spot2"></div>
-
-<div class="top-bar">
-    <div class="title-section">
-        <h1>🌀 POPPY PLAYROOM</h1>
-        <div class="badge" id="janelaCounter">10 JANELAS</div>
+    <div class="header">
+        <div class="twitch-logo">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="#9147ff">
+                <path d="M11.64 5.93h1.43v4.28h-1.43m3.93-4.28H17v4.28h-1.43M7 2L3.43 5.57v12.86h4.28V22l3.58-3.57h2.86L20.57 12V2m-1.43 9.29l-2.85 2.85h-2.86l-2.5 2.5v-2.5H7.71V3.43h11.43v7.86z"/>
+            </svg>
+            <h1>🌀 AURORAPIY • MULTIVIEW PROXY SIMULATOR 🌀</h1>
+        </div>
+        
+        <div class="stats-panel">
+            <div class="stat-box">
+                <div class="label">STREAMS ATIVAS</div>
+                <div class="value" id="activeStreams">15</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">PAÍSES</div>
+                <div class="value" id="countries">12</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">VIEWERS SIM.</div>
+                <div class="value" id="viewers">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">STATUS</div>
+                <div class="value" id="status">🟢 LIVE</div>
+            </div>
+        </div>
     </div>
-    <div class="stats">
-        <span>⏳ <span id="totalReloads">0</span> reloads</span>
-        <span>🔄 <span id="ativoAgora">10</span> ativas</span>
+
+    <div class="video-grid" id="videoGrid"></div>
+
+    <div class="control-panel">
+        <button class="btn" id="rotateAll">🔄 ROTACIONAR IPS</button>
+        <button class="btn" id="newIPs">🌐 NOVOS IPS</button>
     </div>
-</div>
 
-<!-- grid de vídeos será preenchido via JS -->
-<div class="video-grid" id="videoGrid"></div>
+    <script>
+        const CHANNEL_NAME = 'aurorapiy';
+        const QUANTIDADE = 15;
+        let rotacoes = 0;
+        let viewersSimulados = 0;
+        
+        // Banco de IPs simulados por país
+        const ipPools = {
+            '🇺🇸 EUA': ['45.82.134.' + Math.floor(Math.random() * 255), '67.205.156.' + Math.floor(Math.random() * 255)],
+            '🇬🇧 UK': ['89.105.213.' + Math.floor(Math.random() * 255), '81.174.23.' + Math.floor(Math.random() * 255)],
+            '🇩🇪 Alemanha': ['85.214.78.' + Math.floor(Math.random() * 255), '87.139.82.' + Math.floor(Math.random() * 255)],
+            '🇫🇷 França': ['82.127.34.' + Math.floor(Math.random() * 255), '92.143.67.' + Math.floor(Math.random() * 255)],
+            '🇯🇵 Japão': ['126.13.45.' + Math.floor(Math.random() * 255), '112.67.189.' + Math.floor(Math.random() * 255)],
+            '🇧🇷 Brasil': ['177.45.23.' + Math.floor(Math.random() * 255), '189.56.78.' + Math.floor(Math.random() * 255)],
+            '🇨🇦 Canadá': ['64.45.67.' + Math.floor(Math.random() * 255), '67.215.34.' + Math.floor(Math.random() * 255)],
+            '🇦🇺 Austrália': ['103.87.45.' + Math.floor(Math.random() * 255), '121.56.78.' + Math.floor(Math.random() * 255)],
+            '🇳🇱 Holanda': ['82.168.34.' + Math.floor(Math.random() * 255), '94.34.67.' + Math.floor(Math.random() * 255)],
+            '🇸🇪 Suécia': ['81.89.45.' + Math.floor(Math.random() * 255), '85.56.78.' + Math.floor(Math.random() * 255)]
+        };
 
-<div class="footer-controls">
-    <button class="footer-btn" id="recarregarTodasBtn">🔄 RECARREGAR TODAS AGORA</button>
-    <button class="footer-btn" id="resetTimerBtn">⏱️ NOVO CICLO ALEATÓRIO</button>
-</div>
+        const paises = Object.keys(ipPools);
 
-<div style="text-align: center; margin: 20px 0 5px; z-index: 10;">
-    <span class="count-message">✨ cada janela reinicia em minutos aleatórios (entre 0:45 e 3:15) ✨</span>
-</div>
-
-<script>
-    (function() {
-        // ID do vídeo do YouTube (extraído do link que você enviou)
-        const VIDEO_ID = 'IAeYtSJ9oMY';
-        const BASE_URL = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&enablejsapi=1&controls=1&modestbranding=1&rel=0`;
-
-        // configurações das janelas
-        const QUANTIDADE_JANELAS = 15;  // mais de 10, fica bem visual
-        const INTERVALO_MIN_SEG = 45;    // 45 segundos
-        const INTERVALO_MAX_SEG = 195;   // 3 minutos e 15 segundos (195s)
-
-        let totalReloads = 0;
-        const contadores = [];            // armazena timeouts
-        const iframes = [];               // referências aos iframes
-
-        // elemento do contador de reloads
-        const totalReloadsSpan = document.getElementById('totalReloads');
-        const janelaCounterSpan = document.getElementById('janelaCounter');
-        const ativoAgoraSpan = document.getElementById('ativoAgora');
-
-        // grid
-        const grid = document.getElementById('videoGrid');
-
-        // função para gerar número aleatório entre min e max (segundos)
-        function getRandomReloadSeconds() {
-            return Math.floor(Math.random() * (INTERVALO_MAX_SEG - INTERVALO_MIN_SEG + 1)) + INTERVALO_MIN_SEG;
+        function generateRandomIP() {
+            const pais = paises[Math.floor(Math.random() * paises.length)];
+            const pool = ipPools[pais];
+            const ipBase = pool[Math.floor(Math.random() * pool.length)];
+            const lastOctet = Math.floor(Math.random() * 255);
+            return {
+                ip: ipBase.includes('.') ? ipBase.split('.')[0] + '.' + ipBase.split('.')[1] + '.' + ipBase.split('.')[2] + '.' + lastOctet : ipBase,
+                pais: pais,
+                ping: Math.floor(Math.random() * 150) + 20,
+                viewers: Math.floor(Math.random() * 50) + 10
+            };
         }
 
-        // atualiza contadores na UI
-        function atualizaUI() {
-            totalReloadsSpan.textContent = totalReloads;
-            janelaCounterSpan.textContent = `${QUANTIDADE_JANELAS} JANELAS`;
-            ativoAgoraSpan.textContent = QUANTIDADE_JANELAS;  // nesse contexto todas ativas
+        function createStreamCard(index) {
+            const card = document.createElement('div');
+            card.className = 'video-card';
+            
+            const ipInfo = generateRandomIP();
+            viewersSimulados += ipInfo.viewers;
+            
+            // Twitch embed URL - modo mais compatível
+            const twitchUrl = `https://player.twitch.tv/?channel=${CHANNEL_NAME}&parent=${window.location.hostname}&muted=true`;
+            
+            card.innerHTML = `
+                <div class="card-header">
+                    <span class="window-title">📺 STREAM #${String(index + 1).padStart(2, '0')}</span>
+                    <span class="ip-badge">${ipInfo.ip}</span>
+                </div>
+                <div class="video-container">
+                    <iframe src="${twitchUrl}" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen="false"
+                            title="AuroraPIY Twitch"></iframe>
+                </div>
+                <div class="channel-info">
+                    <span class="country-flag">${ipInfo.pais}</span>
+                    <span class="live-badge">🔴 LIVE</span>
+                    <span class="viewer-count">👥 ${ipInfo.viewers} viewers</span>
+                </div>
+                <div class="reload-timer" id="timer-${index}">
+                    ⏳ Próximo IP em: ${Math.floor(Math.random() * 60) + 30}s
+                </div>
+            `;
+            
+            return card;
         }
 
-        // método para recarregar um iframe específico (pelo índice)
-        function reloadIframeByIndex(index) {
-            const iframe = iframes[index];
-            if (iframe) {
-                // incrementa contador global
-                totalReloads++;
-                totalReloadsSpan.textContent = totalReloads;
-
-                // pequeno efeito visual: pisca borda
-                const card = iframe.closest('.video-card');
-                if (card) {
-                    card.style.transition = 'border 0.1s';
-                    card.style.borderColor = '#ff55ff';
-                    card.style.boxShadow = '0 0 40px #ff00c8';
-                    setTimeout(() => {
-                        if (card) {
-                            card.style.borderColor = '';
-                            card.style.boxShadow = '';
-                        }
-                    }, 200);
+        function updateAllIPs() {
+            viewersSimulados = 0;
+            const cards = document.querySelectorAll('.video-card');
+            
+            cards.forEach((card, index) => {
+                const ipInfo = generateRandomIP();
+                const ipBadge = card.querySelector('.ip-badge');
+                const channelInfo = card.querySelector('.channel-info');
+                const timer = card.querySelector('.reload-timer');
+                
+                if (ipBadge) ipBadge.textContent = ipInfo.ip;
+                if (channelInfo) {
+                    channelInfo.innerHTML = `
+                        <span class="country-flag">${ipInfo.pais}</span>
+                        <span class="live-badge">🔴 LIVE</span>
+                        <span class="viewer-count">👥 ${ipInfo.viewers} viewers</span>
+                    `;
                 }
-
-                // recarrega o iframe: muda o src para ele mesmo (com um timestamp pra forçar)
-                const currentSrc = iframe.src.split('?')[0]; // tira params antigos
-                const timestamp = Date.now();
-                // preserva autoplay e mute
-                iframe.src = `${currentSrc}?autoplay=1&mute=1&enablejsapi=1&controls=1&modestbranding=1&rel=0&_=${timestamp}`;
-            }
-        }
-
-        // agenda o reload para uma janela específica
-        function agendarReload(index) {
-            // limpa timer anterior se existir
-            if (contadores[index]) {
-                clearTimeout(contadores[index]);
-            }
-
-            const segundos = getRandomReloadSeconds();
-            const milissegundos = segundos * 1000;
-
-            // atualiza o span do timer na card (se existir)
-            const card = document.querySelectorAll('.video-card')[index];
-            if (card) {
-                const timerSpan = card.querySelector('.timer-badge');
-                if (timerSpan) {
-                    const mins = Math.floor(segundos / 60);
-                    const secs = segundos % 60;
-                    timerSpan.textContent = `🕒 ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                if (timer) {
+                    const segundos = Math.floor(Math.random() * 60) + 30;
+                    timer.textContent = `⏳ Próximo IP em: ${segundos}s`;
                 }
-            }
-
-            // agenda novo reload
-            contadores[index] = setTimeout(() => {
-                // reload no iframe
-                reloadIframeByIndex(index);
-                // re-agenda para o mesmo índice
-                agendarReload(index);
-            }, milissegundos);
-        }
-
-        // criar todas as janelas
-        function criarJanelas() {
-            grid.innerHTML = ''; // limpa
-            // limpa arrays e timers antigos
-            for (let i = 0; i < contadores.length; i++) {
-                if (contadores[i]) clearTimeout(contadores[i]);
-            }
-            contadores.length = 0;
-            iframes.length = 0;
-
-            for (let i = 0; i < QUANTIDADE_JANELAS; i++) {
-                // cria card
-                const card = document.createElement('div');
-                card.className = 'video-card';
-
-                // header com bolinhas (mac style)
-                const header = document.createElement('div');
-                header.className = 'card-header';
-                header.innerHTML = `
-                    <span class="window-dot"></span>
-                    <span class="window-dot"></span>
-                    <span class="window-dot"></span>
-                    <span class="window-title">🪀 JANELA #${i+1}</span>
-                `;
-
-                // container do iframe
-                const videoContainer = document.createElement('div');
-                videoContainer.className = 'video-container';
-
-                const iframe = document.createElement('iframe');
-                // src inicial com mute para não explodir som de todas ao mesmo tempo, mas autoplay
-                iframe.src = `${BASE_URL}&mute=1&_init=${i}`;  // mute inicial, mas pode ser alterado pelo usuário
-                iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-                iframe.allowFullscreen = false;
-                iframe.title = `Poppy Playtime Janela ${i+1}`;
-
-                videoContainer.appendChild(iframe);
-                iframes.push(iframe);  // guarda referência
-
-                // rodapé com timer
-                const footerTimer = document.createElement('div');
-                footerTimer.className = 'reload-timer';
-                footerTimer.innerHTML = `
-                    <span class="timer-badge">⏳ calculando…</span>
-                    <span class="reload-icon">🔄</span>
-                `;
-
-                card.appendChild(header);
-                card.appendChild(videoContainer);
-                card.appendChild(footerTimer);
-                grid.appendChild(card);
-
-                // agenda reload pra esta janela (primeira vez)
-                // mas antes precisamos guardar o contador, vamos fazer após todos criados
-            }
-
-            // agora que todos os iframes existem, agendamos os reloads
-            for (let i = 0; i < QUANTIDADE_JANELAS; i++) {
-                agendarReload(i);
-            }
-
-            // atualiza UI
-            atualizaUI();
-        }
-
-        // reinicia todos os timers (novos ciclos aleatórios)
-        function resetAllTimers() {
-            for (let i = 0; i < QUANTIDADE_JANELAS; i++) {
-                // cancela timer atual
-                if (contadores[i]) {
-                    clearTimeout(contadores[i]);
-                }
-                // agenda novamente
-                agendarReload(i);
-            }
-            // feedback rápido: piscar todas bordas
-            document.querySelectorAll('.video-card').forEach(card => {
-                card.style.transition = 'border 0.15s';
-                card.style.borderColor = '#b7ff9e';
-                card.style.boxShadow = '0 0 35px #76ff7e';
-                setTimeout(() => {
-                    card.style.borderColor = '';
-                    card.style.boxShadow = '';
-                }, 300);
+                
+                viewersSimulados += ipInfo.viewers;
+            });
+            
+            rotacoes++;
+            document.getElementById('viewers').textContent = viewersSimulados;
+            document.getElementById('rotations').textContent = rotacoes;
+            
+            // Atualiza os iframes (recarrega as streams)
+            const iframes = document.querySelectorAll('iframe');
+            iframes.forEach((iframe, i) => {
+                // Recarrega o iframe da Twitch (precisa de um truque para não quebrar)
+                const parent = window.location.hostname;
+                iframe.src = `https://player.twitch.tv/?channel=${CHANNEL_NAME}&parent=${parent}&t=${Date.now()}`;
             });
         }
 
-        // recarrega todas as janelas manualmente
-        function recarregarTodasJanelas() {
-            for (let i = 0; i < iframes.length; i++) {
-                reloadIframeByIndex(i);
-                // reseta o timer dessa janela (para não dar reload junto do antigo)
-                if (contadores[i]) {
-                    clearTimeout(contadores[i]);
-                    agendarReload(i);  // re-agenda com novo tempo
-                }
+        function initializeGrid() {
+            const grid = document.getElementById('videoGrid');
+            grid.innerHTML = '';
+            viewersSimulados = 0;
+            
+            for (let i = 0; i < QUANTIDADE; i++) {
+                const card = createStreamCard(i);
+                grid.appendChild(card);
             }
+            
+            document.getElementById('activeStreams').textContent = QUANTIDADE;
+            document.getElementById('countries').textContent = Object.keys(ipPools).length;
+            document.getElementById('viewers').textContent = viewersSimulados;
+            document.getElementById('rotations').textContent = rotacoes;
         }
 
-        // iniciar tudo
-        criarJanelas();
+        function startAutoRotation() {
+            setInterval(() => {
+                updateAllIPs();
+            }, Math.floor(Math.random() * 60000) + 30000);
+        }
 
-        // event listeners dos botões
-        document.getElementById('recarregarTodasBtn').addEventListener('click', () => {
-            recarregarTodasJanelas();
+        // Event listeners
+        document.getElementById('rotateAll').addEventListener('click', () => {
+            updateAllIPs();
         });
 
-        document.getElementById('resetTimerBtn').addEventListener('click', () => {
-            resetAllTimers();
+        document.getElementById('newIPs').addEventListener('click', () => {
+            // Gera novos pools de IPs
+            Object.keys(ipPools).forEach(pais => {
+                ipPools[pais] = [
+                    Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255),
+                    Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255)
+                ];
+            });
+            updateAllIPs();
         });
 
-        // opcional: atualiza UI periódicamente (mas não necessário)
+        // Inicialização
+        initializeGrid();
+        startAutoRotation();
+
+        // Atualiza timers visualmente
         setInterval(() => {
-            // só pra garantir que contador de reloads fique visível atualizado
-            // nada mais
+            const timers = document.querySelectorAll('.reload-timer');
+            timers.forEach(timer => {
+                const text = timer.textContent;
+                const match = text.match(/(\d+)/);
+                if (match) {
+                    let segundos = parseInt(match[0]);
+                    if (segundos > 0) {
+                        segundos--;
+                        timer.textContent = `⏳ Próximo IP em: ${segundos}s`;
+                    }
+                }
+            });
         }, 1000);
-
-        // também expõe totalReloads para incremento manual (já incrementamos no reloadIframe)
-        // mas a função reloadIframeByIndex já incrementa
-        window.reloadIframeByIndex = reloadIframeByIndex; // debug
-
-        // pequeno detalhe: ao criar as janelas, já exibir contagem inicial
-        atualizaUI();
-    })();
-</script>
+    </script>
 </body>
 </html>
