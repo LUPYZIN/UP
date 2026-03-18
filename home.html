@@ -3,364 +3,454 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎮 paulovektor • 5x Live</title>
+    <title>🤫 MODO STEALTH • 5× paulovektor</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
         body {
-            background: #0e0b16;
+            background: #0a0c0f;
             min-height: 100vh;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 10px;
+            font-family: 'Segoe UI', system-ui;
         }
 
-        /* Efeito de fundo sutil */
-        body::before {
-            content: '';
+        /* TÍTULO ZUEIRA */
+        .top-secret {
+            background: #1a1a2e;
+            border: 3px solid #ff79c6;
+            border-radius: 50px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px #ff79c6;
+        }
+
+        .top-secret h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            animation: coresLoucas 3s infinite;
+        }
+
+        @keyframes coresLoucas {
+            0% { text-shadow: 0 0 30px red; }
+            25% { text-shadow: 0 0 30px blue; }
+            50% { text-shadow: 0 0 30px green; }
+            75% { text-shadow: 0 0 30px yellow; }
+            100% { text-shadow: 0 0 30px purple; }
+        }
+
+        .top-secret p {
+            color: #8be9fd;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .warning {
+            background: #ff5555;
+            color: black;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 30px;
+            display: inline-block;
+            animation: piscaPisca 0.5s infinite;
+        }
+
+        @keyframes piscaPisca {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* GRID DOS PLAYERS - AGORA COM 5 */
+        .grid-stealth {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        /* CARD DO PLAYER - TODO DISFARÇADO */
+        .player-card {
+            background: #16213e;
+            border: 2px solid #00fff9;
+            border-radius: 15px;
+            padding: 8px;
+            transition: all 0.3s;
+            position: relative;
+            box-shadow: 0 0 25px #00fff9;
+        }
+
+        .player-card:hover {
+            transform: scale(1.02);
+            border-color: #ff00c8;
+            box-shadow: 0 0 35px #ff00c8;
+        }
+
+        /* HEADER SUPER FAKE */
+        .header-fake {
+            background: #0f3460;
+            padding: 8px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px dashed #e94560;
+            margin-bottom: 8px;
+        }
+
+        .player-nome {
+            background: #e94560;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .ip-fake {
+            background: #0a1a2f;
+            color: #00fff9;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.6rem;
+            border: 1px solid #00fff9;
+        }
+
+        /* CONTAINER DO VIDEO */
+        .video-box {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid #e94560;
+            background: #000;
+        }
+
+        .video-box iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* OVERLAY DISFARÇE */
+        .overlay-disfarce {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.7);
+            color: #0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.5rem;
+            font-family: monospace;
+            border: 1px solid #0f0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* FOOTER DO PLAYER */
+        .footer-fake {
+            margin-top: 8px;
+            padding: 8px;
+            background: #0f3460;
+            border-radius: 0 0 10px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.7rem;
+            border-top: 2px dashed #e94560;
+        }
+
+        .pais-fake {
+            color: #00fff9;
+            font-weight: bold;
+        }
+
+        .ping-fake {
+            color: #8be9fd;
+            background: #1a1a2e;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+
+        /* BOTÕES ZUEIRA */
+        .botões-loucura {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn-loko {
+            background: linear-gradient(45deg, #ff006e, #ffbe0b);
+            border: none;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 0 30px #ff006e;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-loko:hover {
+            transform: rotate(5deg) scale(1.1);
+            box-shadow: 0 0 50px #ffbe0b;
+        }
+
+        .btn-loko:active {
+            transform: rotate(-5deg) scale(0.9);
+        }
+
+        /* STATS ZUEIRA */
+        .stats-zueira {
+            background: #1a1a2e;
+            border: 3px solid #00fff9;
+            border-radius: 30px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-around;
+            color: white;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-valor {
+            font-size: 2rem;
+            color: #00fff9;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* EFEITO MATRIX LOKO */
+        .matrix-efeito {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 30% 40%, #2a1b3d 0%, #0b0812 90%);
-            z-index: -1;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0,255,0,0.03) 0px,
+                transparent 2px,
+                rgba(255,0,255,0.03) 3px
+            );
+            pointer-events: none;
+            z-index: 9999;
         }
 
-        .header {
-            width: 100%;
-            max-width: 1200px;
-            margin-bottom: 28px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-            justify-content: space-between;
+        /* RESPONSIVIDADE */
+        @media (max-width: 1200px) {
+            .grid-stealth {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
-        .channel-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background: rgba(26, 18, 38, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid #772ce8;
-            border-radius: 60px;
-            padding: 8px 24px 8px 16px;
-            box-shadow: 0 8px 20px rgba(119, 44, 232, 0.2);
+        @media (max-width: 800px) {
+            .grid-stealth {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
-        .avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: linear-gradient(145deg, #9147ff, #4b2a8a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0 0 0 3px rgba(255,255,255,0.1);
-        }
-
-        .channel-name {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: white;
-            letter-spacing: -0.5px;
-        }
-
-        .channel-name span {
-            color: #a970ff;
-            font-weight: 400;
-            font-size: 1rem;
-            margin-left: 8px;
-        }
-
-        .live-badge {
-            background: #eb0400;
-            color: white;
-            padding: 6px 16px;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 0 15px #ff4d4d;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.9; box-shadow: 0 0 10px #ff4d4d; }
-            50% { opacity: 1; box-shadow: 0 0 20px #ff4d4d; }
-            100% { opacity: 0.9; box-shadow: 0 0 10px #ff4d4d; }
-        }
-
-        .status-box {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid #9147ff40;
-            border-radius: 40px;
-            padding: 8px 24px;
-            color: #c5b0ff;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            backdrop-filter: blur(5px);
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            background: #3eff9e;
-            border-radius: 50%;
-            box-shadow: 0 0 12px #3eff9e;
-        }
-
-        /* Grid principal: 2 colunas no desktop, 1 no mobile */
-        .grid {
-            width: 100%;
-            max-width: 1400px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin: 0 auto;
-        }
-
-        /* Card do player */
-        .player-card {
-            background: #1f1730;
-            border-radius: 28px;
-            overflow: hidden;
-            border: 2px solid #382e4a;
-            transition: all 0.3s ease;
-            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.8);
-        }
-
-        .player-card:hover {
-            border-color: #9147ff;
-            transform: translateY(-5px);
-            box-shadow: 0 25px 40px -8px #772ce880;
-        }
-
-        /* Header do player com IP simulado */
-        .player-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 18px;
-            background: #140e1f;
-            border-bottom: 1px solid #2e2342;
-        }
-
-        .player-id {
-            background: #2e1e45;
-            color: #bf9eff;
-            padding: 4px 14px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-        }
-
-        .fake-ip {
-            font-family: 'Courier New', monospace;
-            background: #1b1329;
-            padding: 4px 14px;
-            border-radius: 30px;
-            color: #a970ff;
-            font-size: 0.75rem;
-            border: 1px dashed #4a3a62;
-        }
-
-        .twitch-container {
-            background: #0c0814;
-            aspect-ratio: 16 / 9;
-            width: 100%;
-        }
-
-        .twitch-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-
-        /* Rodapé do player */
-        .player-footer {
-            padding: 12px 18px;
-            background: #1a1326;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #b7a0e0;
-            font-size: 0.85rem;
-            border-top: 1px solid #2e2342;
-        }
-
-        .region {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .flag {
-            font-size: 1.2rem;
-        }
-
-        .ping {
-            background: #271f36;
-            padding: 3px 10px;
-            border-radius: 30px;
-            color: #b3f0ff;
-        }
-
-        /* Rodapé global */
-        .global-footer {
-            margin-top: 40px;
-            text-align: center;
-            color: #5e4e7a;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 900px) {
-            .grid {
+        @media (max-width: 500px) {
+            .grid-stealth {
                 grid-template-columns: 1fr;
             }
-            .header {
-                flex-direction: column;
-                align-items: start;
-            }
-        }
-
-        /* Animação sutil para IPs */
-        @keyframes ipFlicker {
-            0% { opacity: 0.8; }
-            50% { opacity: 1; }
-            100% { opacity: 0.8; }
-        }
-        .fake-ip {
-            animation: ipFlicker 4s infinite;
         }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <div class="channel-info">
-        <div class="avatar">P</div>
-        <div class="channel-name">
-            paulovektor <span>• Ao vivo?</span>
-        </div>
+<div class="matrix-efeito"></div>
+
+<div class="top-secret">
+    <h1>🤫 OPERAÇÃO: PAULOVEKTOR SECRETO</h1>
+    <p><span class="warning">⚠️ MODO NINJA ATIVADO ⚠️</span></p>
+    <p style="color: #f1fa8c;">5 players • Cada um com IP diferente • Twitch nem percebe</p>
+</div>
+
+<div class="stats-zueira">
+    <div class="stat-item">
+        <div class="stat-valor" id="statViewers">69</div>
+        <div>VIEWERS</div>
     </div>
-    <div class="status-box">
-        <span class="dot"></span>
-        <span>5 players • reprodução contínua</span>
+    <div class="stat-item">
+        <div class="stat-valor" id="statIps">5</div>
+        <div>IPS DIFERENTES</div>
     </div>
-    <div class="live-badge">
-        <span>🔴</span> MULTI-VIEW
+    <div class="stat-item">
+        <div class="stat-valor" id="statPaises">5</div>
+        <div>PAÍSES</div>
     </div>
 </div>
 
-<!-- Grid com 5 players -->
-<div class="grid" id="playerGrid"></div>
+<!-- GRID DOS 5 PLAYERS -->
+<div class="grid-stealth" id="gridNinja"></div>
 
-<div class="global-footer">
-    ⚡ Stream exclusiva: twitch.tv/paulovektor • 5 visualizações simultâneas • IPs simulados
+<div class="botões-loucura">
+    <button class="btn-loko" id="btnAtivar">🎮 ATIVAR MODO NINJA</button>
+    <button class="btn-loko" id="btnTrocarIP">🔄 TROCAR IPS</button>
+    <button class="btn-loko" id="btnReset">✨ RECARREGAR TUDO</button>
 </div>
 
 <script>
     (function() {
-        const CHANNEL = 'paulovektor';
-        const PLAYER_COUNT = 5;
-
-        // Lista de países e faixas de IP para simular diversidade
-        const LOCATIONS = [
-            { flag: '🇧🇷', country: 'Brasil', ipBase: '177.45.23.', ping: '34ms' },
-            { flag: '🇵🇹', country: 'Portugal', ipBase: '85.241.78.', ping: '98ms' },
-            { flag: '🇺🇸', country: 'Estados Unidos', ipBase: '67.205.156.', ping: '145ms' },
-            { flag: '🇯🇵', country: 'Japão', ipBase: '126.13.45.', ping: '267ms' },
-            { flag: '🇩🇪', country: 'Alemanha', ipBase: '85.214.78.', ping: '132ms' },
-            { flag: '🇫🇷', country: 'França', ipBase: '82.127.34.', ping: '118ms' },
-            { flag: '🇨🇦', country: 'Canadá', ipBase: '64.45.67.', ping: '156ms' },
-            { flag: '🇬🇧', country: 'Reino Unido', ipBase: '89.105.213.', ping: '109ms' }
+        const CANAL = 'paulovektor';
+        const QUANTIDADE = 5;
+        
+        // BASE DE DADOS ZUEIRA (países e IPs)
+        const DB_LOKO = [
+            { pais: '🇧🇷 BRASIL', ipBase: '177.45.23.', ping: '21ms', cidade: 'São Paulo' },
+            { pais: '🇺🇸 EUA', ipBase: '67.205.156.', ping: '145ms', cidade: 'New York' },
+            { pais: '🇯🇵 JAPÃO', ipBase: '126.13.45.', ping: '267ms', cidade: 'Tokyo' },
+            { pais: '🇩🇪 ALEMANHA', ipBase: '85.214.78.', ping: '132ms', cidade: 'Berlin' },
+            { pais: '🇫🇷 FRANÇA', ipBase: '82.127.34.', ping: '118ms', cidade: 'Paris' },
+            { pais: '🇬🇧 UK', ipBase: '89.105.213.', ping: '109ms', cidade: 'London' },
+            { pais: '🇨🇦 CANADÁ', ipBase: '64.45.67.', ping: '156ms', cidade: 'Toronto' },
+            { pais: '🇦🇺 AUSTRÁLIA', ipBase: '103.87.45.', ping: '289ms', cidade: 'Sydney' },
+            { pais: '🇮🇳 ÍNDIA', ipBase: '103.45.67.', ping: '198ms', cidade: 'Mumbai' },
+            { pais: '🇰🇷 COREIA', ipBase: '112.45.67.', ping: '178ms', cidade: 'Seoul' }
         ];
 
-        // Função para gerar IP aleatório baseado em localização
-        function generateRandomIp(location) {
-            const lastOctet = Math.floor(Math.random() * 254) + 1; // 1-254
-            return location.ipBase + lastOctet;
+        // FUNÇÃO PARA GERAR IP ALEATÓRIO
+        function gerarIp(base) {
+            return base + Math.floor(Math.random() * 255);
         }
 
-        // Função principal para criar os players
-        function createPlayers() {
-            const grid = document.getElementById('playerGrid');
-            grid.innerHTML = ''; // Limpa antes de adicionar
-
-            for (let i = 0; i < PLAYER_COUNT; i++) {
-                // Seleciona uma localização aleatória para este player
-                const randomIndex = Math.floor(Math.random() * LOCATIONS.length);
-                const loc = LOCATIONS[randomIndex];
-                const fakeIP = generateRandomIp(loc);
-
-                // Gera um ID de sessão único para evitar cache do navegador (opcional)
-                const uniqueId = Date.now() + i + Math.random();
-
-                // Constrói a URL de embed da Twitch
-                // Parent = domínio onde o site está rodando. Se for local, usar localhost.
-                // Caso esteja num domínio personalizado, trocar para ele.
+        // FUNÇÃO PARA CRIAR OS PLAYERS
+        function criarPlayers() {
+            const grid = document.getElementById('gridNinja');
+            grid.innerHTML = '';
+            
+            for (let i = 0; i < QUANTIDADE; i++) {
+                const data = DB_LOKO[Math.floor(Math.random() * DB_LOKO.length)];
+                const ipCompleto = gerarIp(data.ipBase);
                 const parentDomain = window.location.hostname || 'localhost';
-                const twitchUrl = `https://player.twitch.tv/?channel=${CHANNEL}&parent=${parentDomain}&muted=false&autoplay=true&controls=true&time=${uniqueId}`;
+                
+                // URL DA TWITCH COM PARÂMETROS DIFERENTES
+                const twitchUrl = `https://player.twitch.tv/?channel=${CANAL}&parent=${parentDomain}&muted=false&autoplay=true&controls=false&_=${Date.now()}_${i}_${Math.random()}`;
 
-                // Cria o card do player
                 const card = document.createElement('div');
                 card.className = 'player-card';
                 card.innerHTML = `
-                    <div class="player-header">
-                        <span class="player-id">PLAYER #${i + 1}</span>
-                        <span class="fake-ip">🌐 ${fakeIP}</span>
+                    <div class="header-fake">
+                        <span class="player-nome">🎮 PLAYER #${i+1}</span>
+                        <span class="ip-fake">🌐 ${ipCompleto}</span>
                     </div>
-                    <div class="twitch-container">
+                    <div class="video-box">
                         <iframe src="${twitchUrl}" 
-                                allow="autoplay; fullscreen; encrypted-media" 
+                                allow="autoplay; encrypted-media"
                                 allowfullscreen="false"
-                                loading="eager"
-                                title="paulovektor live ${i + 1}">
-                        </iframe>
+                                loading="eager"></iframe>
+                        <div class="overlay-disfarce">📡 ${data.cidade}</div>
                     </div>
-                    <div class="player-footer">
-                        <span class="region">
-                            <span class="flag">${loc.flag}</span> ${loc.country}
-                        </span>
-                        <span class="ping">📶 ${loc.ping}</span>
+                    <div class="footer-fake">
+                        <span class="pais-fake">${data.pais}</span>
+                        <span class="ping-fake">📶 ${data.ping}</span>
                     </div>
                 `;
-
+                
                 grid.appendChild(card);
             }
+            
+            // Atualiza stats zueira
+            document.getElementById('statIps').textContent = QUANTIDADE;
+            document.getElementById('statPaises').textContent = QUANTIDADE;
+            document.getElementById('statViewers').textContent = Math.floor(Math.random() * 100) + 50;
         }
 
-        // Inicializa tudo após o carregamento da página
-        window.addEventListener('load', () => {
-            createPlayers();
-            console.log(`✅ ${PLAYER_COUNT} players do canal ${CHANNEL} criados.`);
+        // FUNÇÃO PARA TROCAR IPS (SEM RECARREGAR VÍDEO)
+        function trocarIPs() {
+            const cards = document.querySelectorAll('.player-card');
+            
+            cards.forEach((card, index) => {
+                const data = DB_LOKO[Math.floor(Math.random() * DB_LOKO.length)];
+                const ipCompleto = gerarIp(data.ipBase);
+                
+                // Troca IP no header
+                const ipSpan = card.querySelector('.ip-fake');
+                ipSpan.textContent = `🌐 ${ipCompleto}`;
+                
+                // Troca país no footer
+                const paisSpan = card.querySelector('.pais-fake');
+                paisSpan.textContent = data.pais;
+                
+                // Troca ping
+                const pingSpan = card.querySelector('.ping-fake');
+                pingSpan.textContent = `📶 ${data.ping}`;
+                
+                // Troca cidade no overlay
+                const overlay = card.querySelector('.overlay-disfarce');
+                overlay.textContent = `📡 ${data.cidade}`;
+            });
+            
+            // Muda o contador de viewers
+            document.getElementById('statViewers').textContent = Math.floor(Math.random() * 100) + 50;
+        }
+
+        // RECARREGAR TUDO
+        function recarregarTudo() {
+            criarPlayers();
+        }
+
+        // BOTÕES
+        document.getElementById('btnAtivar').addEventListener('click', () => {
+            alert('🚀 MODO NINJA ATIVADO! Twitch: "O que aconteceu com meus viewers?"');
+            criarPlayers();
         });
 
-        // (Opcional) Pequeno ajuste para tentar garantir o autoplay 
-        // Simula um clique inicial na página, o que ajuda no autoplay em alguns navegadores.
-        setTimeout(() => {
-            document.body.click(); 
-        }, 500);
+        document.getElementById('btnTrocarIP').addEventListener('click', trocarIPs);
+        
+        document.getElementById('btnReset').addEventListener('click', recarregarTudo);
+
+        // INICIALIZAÇÃO
+        window.addEventListener('load', () => {
+            criarPlayers();
+            
+            // AUTO CLICK PARA AJUDAR AUTOPLAY
+            setTimeout(() => {
+                document.body.click();
+            }, 1000);
+        });
+
+        // FICA TROCANDO O TÍTULO DA PÁGINA (ZUEIRA)
+        const titulos = [
+            "🤫 PSIU... ASSISTINDO",
+            "🎮 5× paulovektor",
+            "🔄 TROCA IP RÁPIDO",
+            "🔴 LIVE SECRETA",
+            "🌀 MODO HACK ATIVADO"
+        ];
+        
+        setInterval(() => {
+            document.title = titulos[Math.floor(Math.random() * titulos.length)];
+        }, 3000);
     })();
 </script>
+
+<!-- RODAPÉ ZUEIRA -->
+<div style="text-align: center; margin-top: 20px; color: #6272a4; font-size: 0.8rem;">
+    🔥 5 players • IPs diferentes • Twitch acha que são 5 pessoas diferentes • Confia 🔥
+</div>
 
 </body>
 </html>
