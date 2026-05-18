@@ -1,143 +1,97 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Looto - Busca Direta Steam</title>
-    <style>
-        body {
-            background-color: #0b0b0d;
-            color: #e1e1e6;
-            font-family: sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: #121214;
-            padding: 30px;
-            border-radius: 8px;
-            border: 1px solid #29292e;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            text-align: center;
-            width: 90%;
-            max-width: 420px;
-        }
-        h2 {
-            color: #00b37e;
-            margin-top: 0;
-            font-size: 28px;
-            letter-spacing: 1px;
-        }
-        input {
-            width: 100%;
-            padding: 14px;
-            background: #202024;
-            border: 2px solid #29292e;
-            border-radius: 6px;
-            color: #fff;
-            font-size: 16px;
-            box-sizing: border-box;
-            margin-bottom: 15px;
-        }
-        input:focus {
-            border-color: #00b37e;
-            outline: none;
-        }
-        .resultado-box {
-            margin-top: 15px;
-            background: #202024;
-            border-radius: 6px;
-            padding: 10px;
-            min-height: 160px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 1px dashed #29292e;
-        }
-        img {
-            max-width: 100%;
-            border-radius: 4px;
-            display: none;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-        }
-        .status-tag {
-            font-size: 13px;
-            color: #8d8d99;
-            margin-bottom: 10px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buscar imagens Steam</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:30px;
+}
+
+input{
+    width:300px;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+}
+
+button{
+    padding:12px 20px;
+    margin-left:10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:#1b2838;
+    color:white;
+}
+
+#result{
+    margin-top:30px;
+}
+
+img{
+    width:500px;
+    max-width:100%;
+    border-radius:12px;
+    margin:10px;
+    box-shadow:0 0 20px rgba(0,0,0,0.5);
+}
+</style>
 </head>
 <body>
 
-<div class="container">
-    <h2>LOOTO 🎮</h2>
-    <p style="color: #8d8d99; font-size: 14px;">Digite o nome do jogo (ex: counter-strike, portal, apex):</p>
-    
-    <input type="text" id="campoBusca" placeholder="Digite o nome do jogo..." autocomplete="off">
+<h1>Buscar imagens da Steam</h1>
 
-    <div class="resultado-box">
-        <div id="statusEnvio" class="status-tag">Pronto para buscar!</div>
-        <img id="imagemCapa" src="" alt="Capa do Jogo">
-    </div>
-</div>
+<input type="text" id="gameName" placeholder="Ex: GTA V">
+<button onclick="buscarJogo()">Buscar</button>
+
+<div id="result"></div>
 
 <script>
-    const campoBusca = document.getElementById('campoBusca');
-    const imagemCapa = document.getElementById('imagemCapa');
-    const statusEnvio = document.getElementById('statusEnvio');
+async function buscarJogo(){
+    const nome = document.getElementById("gameName").value;
+    const result = document.getElementById("result");
 
-    let tempoEspera;
+    result.innerHTML = "Buscando...";
 
-    campoBusca.addEventListener('input', () => {
-        clearTimeout(tempoEspera);
-        const termoBusca = campoBusca.value.trim();
+    const searchUrl = `https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(nome)}&l=portuguese`;
 
-        if (termoBusca.length < 3) {
-            imagemCapa.style.display = 'none';
-            statusEnvio.innerText = "Aguardando digitação...";
-            statusEnvio.style.color = "#8d8d99";
+    try{
+        const res = await fetch(searchUrl);
+        const data = await res.json();
+
+        if(data.items.length === 0){
+            result.innerHTML = "Jogo não encontrado";
             return;
         }
 
-        statusEnvio.innerText = "Buscando na Steam...";
-        statusEnvio.style.color = "#e1e1e6";
+        const jogo = data.items[0];
+        const appid = jogo.id;
 
-        // Aguarda 400ms após o usuário parar de digitar para fazer a busca
-        tempoEspera = setTimeout(async () => {
-            try {
-                // Esta API da Steam aceita requisições diretas de servidores locais (CORS livre)
-                const urlSugestoesSteam = `https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(termoBusca)}&l=portuguese&cc=BR`;
+        const header = `https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/${appid}/header.jpg`;
+        const capsule = `https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/${appid}/library_hero.jpg`;
+        const bg = `https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/${appid}/page_bg_generated_v6b.jpg`;
 
-                const resposta = await fetch(urlSugestoesSteam);
-                const dados = await resposta.json();
-
-                if (dados && dados.items && dados.items.length > 0) {
-                    const jogo = dados.items[0];
-                    const idDoJogo = jogo.id;
-
-                    // Exibe a imagem oficial
-                    imagemCapa.src = `https://cdn.akamai.steamstatic.com/steam/apps/${idDoJogo}/header.jpg`;
-                    imagemCapa.style.display = 'block';
-                    statusEnvio.innerText = `${jogo.name}`;
-                    statusEnvio.style.color = "#00b37e";
-                } else {
-                    imagemCapa.style.display = 'none';
-                    statusEnvio.innerText = "Nenhum jogo encontrado.";
-                    statusEnvio.style.color = "#f75a68";
-                }
-
-            } catch (erro) {
-                statusEnvio.innerText = "Erro na rede. Tente digitar novamente.";
-                statusEnvio.style.color = "#f75a68";
-                console.error(erro);
-            }
-        }, 400);
-    });
+        result.innerHTML = `
+            <h2>${jogo.name}</h2>
+            <p>Header</p>
+            <img src="${header}">
+            <p>Hero Background</p>
+            <img src="${capsule}">
+            <p>Background</p>
+            <img src="${bg}">
+        `;
+    }catch(err){
+        result.innerHTML = "Erro ao buscar.";
+        console.error(err);
+    }
+}
 </script>
 
 </body>
