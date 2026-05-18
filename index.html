@@ -2,70 +2,86 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Buscar imagens Steam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buscar capa de jogo</title>
+
 <style>
 body{
     background:#111;
     color:white;
     font-family:Arial;
     text-align:center;
-    padding:30px;
+    padding:40px;
 }
+
 input{
-    padding:12px;
     width:300px;
-}
-button{
     padding:12px;
-    cursor:pointer;
+    border:none;
+    border-radius:8px;
 }
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    margin-left:10px;
+}
+
 img{
-    width:500px;
+    margin-top:20px;
+    width:700px;
     max-width:100%;
-    margin:15px;
-    border-radius:10px;
+    border-radius:14px;
+}
+
+#resultado{
+    margin-top:30px;
 }
 </style>
 </head>
 <body>
 
-<h1>Buscar imagens da Steam</h1>
+<h1>Buscar imagem automática</h1>
 
-<input id="gameName" placeholder="Digite o nome do jogo">
+<input id="jogo" placeholder="Digite o nome do jogo">
 <button onclick="buscar()">Buscar</button>
 
 <div id="resultado"></div>
 
 <script>
-async function buscar(){
-    const nome = document.getElementById("gameName").value;
-    const div = document.getElementById("resultado");
+const API_KEY = "834abf550c2e4781a7030ce0591deedc";
 
-    div.innerHTML = "Buscando...";
+async function buscar(){
+    const nome = document.getElementById("jogo").value;
+    const resultado = document.getElementById("resultado");
+
+    resultado.innerHTML = "Buscando...";
 
     try{
-        const url = `https://corsproxy.io/?https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(nome)}&l=portuguese`;
+        const url = `https://api.rawg.io/api/games?key=${API_KEY}&search=${encodeURIComponent(nome)}`;
 
         const res = await fetch(url);
         const data = await res.json();
 
-        if(!data.items || data.items.length === 0){
-            div.innerHTML = "Jogo não encontrado";
+        if(!data.results || data.results.length === 0){
+            resultado.innerHTML = "Jogo não encontrado";
             return;
         }
 
-        const jogo = data.items[0];
-        const appid = jogo.id;
+        const jogo = data.results[0];
 
-        div.innerHTML = `
+        resultado.innerHTML = `
             <h2>${jogo.name}</h2>
-            <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/${appid}/library_hero.jpg">
-            <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/${appid}/header.jpg">
-            <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/${appid}/page_bg_generated_v6b.jpg">
+            <img src="${jogo.background_image}">
+            <p><strong>URL da imagem:</strong></p>
+            <textarea style="width:90%;height:80px;">${jogo.background_image}</textarea>
         `;
-    }catch(e){
-        div.innerHTML = "Erro ao buscar";
-        console.error(e);
+    }
+    catch(err){
+        resultado.innerHTML = "Erro ao buscar";
+        console.error(err);
     }
 }
 </script>
