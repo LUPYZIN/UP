@@ -3,459 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎬 5× YOUTUBE LOOP • Poppy Playtime Chapter 5</title>
+    <title>Looto - Busca Direta Steam</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui;
-        }
-
         body {
-            background: #0a0c0f;
+            background-color: #0b0b0d;
+            color: #e1e1e6;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             min-height: 100vh;
-            padding: 20px;
+            margin: 0;
         }
-
-        /* CABEÇALHO */
-        .header {
-            background: linear-gradient(145deg, #1a1a2e, #16213e);
-            border: 3px solid #ff0000;
-            border-radius: 30px;
-            padding: 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 0 40px #ff0000;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header h1 {
-            color: white;
-            font-size: 2rem;
+        .container {
+            background: #121214;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #29292e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+            width: 90%;
+            max-width: 420px;
         }
-
-        .header h1 span {
-            color: #ff0000;
-            text-shadow: 0 0 20px #ff0000;
+        h2 {
+            color: #00b37e;
+            margin-top: 0;
+            font-size: 28px;
+            letter-spacing: 1px;
         }
-
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
+        input {
+            width: 100%;
+            padding: 14px;
+            background: #202024;
+            border: 2px solid #29292e;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+        input:focus {
+            border-color: #00b37e;
+            outline: none;
+        }
+        .resultado-box {
             margin-top: 15px;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .stat-item {
-            background: rgba(255,0,0,0.2);
-            padding: 8px 25px;
-            border-radius: 40px;
-            border: 1px solid #ff0000;
-        }
-
-        /* GRID DOS PLAYERS */
-        .grid-youtube {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        /* CARD DO PLAYER */
-        .youtube-card {
-            background: #1a1a2e;
-            border: 3px solid #ff0000;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(255,0,0,0.3);
-            transition: all 0.3s;
-        }
-
-        .youtube-card:hover {
-            transform: translateY(-8px);
-            border-color: #ff4d4d;
-            box-shadow: 0 20px 40px #ff0000;
-        }
-
-        /* HEADER DO CARD */
-        .card-header {
-            background: #0f0f1f;
+            background: #202024;
+            border-radius: 6px;
             padding: 10px;
+            min-height: 160px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            border-bottom: 2px solid #ff0000;
-        }
-
-        .player-id {
-            background: #ff0000;
-            color: white;
-            padding: 4px 15px;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
-
-        .loop-badge {
-            background: #00ff00;
-            color: black;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.6rem;
-            font-weight: bold;
-            animation: piscaLoop 1.5s infinite;
-        }
-
-        @keyframes piscaLoop {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        /* CONTAINER DO YOUTUBE */
-        .video-wrapper {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: #000;
-        }
-
-        .video-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* OVERLAY DE TEMPO */
-        .time-overlay {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0,0,0,0.8);
-            color: #00ff00;
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 0.6rem;
-            font-family: monospace;
-            border: 1px solid #00ff00;
-            z-index: 10;
-        }
-
-        /* FOOTER DO CARD */
-        .card-footer {
-            padding: 10px;
-            background: #0f0f1f;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #ccc;
-            font-size: 0.7rem;
-            border-top: 2px solid #ff0000;
-        }
-
-        .progress {
-            color: #00ff00;
-            font-family: monospace;
-        }
-
-        /* BOTÕES DE CONTROLE */
-        .control-panel {
-            display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 30px 0;
-            flex-wrap: wrap;
+            border: 1px dashed #29292e;
         }
-
-        .btn {
-            background: linear-gradient(45deg, #ff0000, #ff4d4d);
-            border: none;
-            color: white;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 0 30px #ff0000;
-            transition: all 0.3s;
+        img {
+            max-width: 100%;
+            border-radius: 4px;
+            display: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
         }
-
-        .btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 60px #ff4d4d;
-        }
-
-        .btn.green {
-            background: linear-gradient(45deg, #00aa00, #00ff00);
-            box-shadow: 0 0 30px #00ff00;
-        }
-
-        /* STATUS GLOBAL */
-        .global-status {
-            background: #1a1a2e;
-            border: 2px solid #ff0000;
-            border-radius: 30px;
-            padding: 15px;
-            margin-top: 20px;
-            text-align: center;
-            color: white;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 20px;
-            background: #333;
-            border-radius: 10px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff0000, #ff4d4d);
-            width: 0%;
-            transition: width 1s;
-        }
-
-        @media (max-width: 1200px) {
-            .grid-youtube {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (max-width: 800px) {
-            .grid-youtube {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 500px) {
-            .grid-youtube {
-                grid-template-columns: 1fr;
-            }
+        .status-tag {
+            font-size: 13px;
+            color: #8d8d99;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>🎬 <span>POPPY PLAYTIME</span> CHAPTER 5 • 5× LOOP</h1>
-    <div class="stats">
-        <div class="stat-item">🎮 5 PLAYERS</div>
-        <div class="stat-item" id="loopCounter">🔄 LOOPS: 0</div>
-        <div class="stat-item" id="timeDisplay">⏱️ 5:39</div>
-    </div>
-</div>
+<div class="container">
+    <h2>LOOTO 🎮</h2>
+    <p style="color: #8d8d99; font-size: 14px;">Digite o nome do jogo (ex: counter-strike, portal, apex):</p>
+    
+    <input type="text" id="campoBusca" placeholder="Digite o nome do jogo..." autocomplete="off">
 
-<!-- GRID COM 5 PLAYERS -->
-<div class="grid-youtube" id="youtubeGrid"></div>
-
-<!-- PAINEL DE CONTROLE -->
-<div class="control-panel">
-    <button class="btn" id="restartAllBtn">🔄 REINICIAR TODOS</button>
-    <button class="btn green" id="syncBtn">⏱️ SINCRONIZAR</button>
-</div>
-
-<!-- STATUS GLOBAL -->
-<div class="global-status">
-    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-        <span>📊 PROGRESSO DO VÍDEO</span>
-        <span id="globalProgressText">0%</span>
-    </div>
-    <div class="progress-bar">
-        <div class="progress-fill" id="globalProgressBar"></div>
-    </div>
-    <div style="margin-top: 10px; color: #ff6666;" id="statusMessage">
-        🔴 Rodando em loop infinito • 5:39 cada
+    <div class="resultado-box">
+        <div id="statusEnvio" class="status-tag">Pronto para buscar!</div>
+        <img id="imagemCapa" src="" alt="Capa do Jogo">
     </div>
 </div>
 
 <script>
-    (function() {
-        // ID DO VÍDEO (Poppy Playtime Chapter 5)
-        const VIDEO_ID = 'IAeYtSJ9oMY';
-        const VIDEO_DURATION = 339; // 5:39 em segundos
-        const PLAYER_COUNT = 5;
-        
-        let players = [];
-        let loopCount = 0;
-        let intervals = [];
-        
-        // IPs diferentes para cada player (só visual)
-        const IPS = [
-            { ip: '177.45.23.187', pais: '🇧🇷 BR' },
-            { ip: '67.205.156.92', pais: '🇺🇸 US' },
-            { ip: '89.105.213.156', pais: '🇬🇧 UK' },
-            { ip: '85.214.78.43', pais: '🇩🇪 DE' },
-            { ip: '126.13.45.201', pais: '🇯🇵 JP' }
-        ];
+    const campoBusca = document.getElementById('campoBusca');
+    const imagemCapa = document.getElementById('imagemCapa');
+    const statusEnvio = document.getElementById('statusEnvio');
 
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    let tempoEspera;
+
+    campoBusca.addEventListener('input', () => {
+        clearTimeout(tempoEspera);
+        const termoBusca = campoBusca.value.trim();
+
+        if (termoBusca.length < 3) {
+            imagemCapa.style.display = 'none';
+            statusEnvio.innerText = "Aguardando digitação...";
+            statusEnvio.style.color = "#8d8d99";
+            return;
         }
 
-        function createYouTubePlayer(index) {
-            const card = document.createElement('div');
-            card.className = 'youtube-card';
-            
-            // URL do YouTube com parâmetros para loop e autoplay
-            // playlist? loop=1 faz o vídeo repetir
-            const youtubeUrl = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0&loop=1&playlist=${VIDEO_ID}&t=${Date.now()}_${index}`;
+        statusEnvio.innerText = "Buscando na Steam...";
+        statusEnvio.style.color = "#e1e1e6";
 
-            card.innerHTML = `
-                <div class="card-header">
-                    <span class="player-id">PLAYER #${index + 1}</span>
-                    <span class="loop-badge">🔄 LOOP</span>
-                </div>
-                <div class="video-wrapper" id="wrapper-${index}">
-                    <iframe src="${youtubeUrl}" 
-                            allow="autoplay; encrypted-media; fullscreen"
-                            allowfullscreen="false"
-                            id="player-${index}"
-                            loading="eager"></iframe>
-                    <div class="time-overlay" id="time-${index}">
-                        ${IPS[index].pais} • 0:00 / 5:39
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span>🌐 ${IPS[index].ip}</span>
-                    <span class="progress" id="progress-${index}">⏳ 0%</span>
-                </div>
-            `;
-            
-            return card;
-        }
+        // Aguarda 400ms após o usuário parar de digitar para fazer a busca
+        tempoEspera = setTimeout(async () => {
+            try {
+                // Esta API da Steam aceita requisições diretas de servidores locais (CORS livre)
+                const urlSugestoesSteam = `https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(termoBusca)}&l=portuguese&cc=BR`;
 
-        function initializePlayers() {
-            const grid = document.getElementById('youtubeGrid');
-            grid.innerHTML = '';
-            players = [];
-            
-            // Limpa intervals antigos
-            intervals.forEach(i => clearInterval(i));
-            intervals = [];
-            
-            for (let i = 0; i < PLAYER_COUNT; i++) {
-                grid.appendChild(createYouTubePlayer(i));
-                players.push({
-                    index: i,
-                    currentTime: 0,
-                    loopCount: 0
-                });
+                const resposta = await fetch(urlSugestoesSteam);
+                const dados = await resposta.json();
+
+                if (dados && dados.items && dados.items.length > 0) {
+                    const jogo = dados.items[0];
+                    const idDoJogo = jogo.id;
+
+                    // Exibe a imagem oficial
+                    imagemCapa.src = `https://cdn.akamai.steamstatic.com/steam/apps/${idDoJogo}/header.jpg`;
+                    imagemCapa.style.display = 'block';
+                    statusEnvio.innerText = `${jogo.name}`;
+                    statusEnvio.style.color = "#00b37e";
+                } else {
+                    imagemCapa.style.display = 'none';
+                    statusEnvio.innerText = "Nenhum jogo encontrado.";
+                    statusEnvio.style.color = "#f75a68";
+                }
+
+            } catch (erro) {
+                statusEnvio.innerText = "Erro na rede. Tente digitar novamente.";
+                statusEnvio.style.color = "#f75a68";
+                console.error(erro);
             }
-            
-            // Inicia simulação de tempo (não é o tempo real do YouTube, só visual)
-            startTimeSimulation();
-        }
-
-        function startTimeSimulation() {
-            // Atualiza a cada segundo
-            const interval = setInterval(() => {
-                players.forEach(player => {
-                    player.currentTime = (player.currentTime + 1) % VIDEO_DURATION;
-                    
-                    // Se chegou ao fim, incrementa loop
-                    if (player.currentTime === 0) {
-                        player.loopCount++;
-                    }
-                    
-                    // Atualiza UI
-                    updatePlayerUI(player);
-                });
-                
-                // Atualiza contador global de loops
-                const totalLoops = players.reduce((acc, p) => acc + p.loopCount, 0);
-                loopCount = totalLoops;
-                document.getElementById('loopCounter').textContent = `🔄 LOOPS: ${totalLoops}`;
-                
-                // Atualiza progresso global
-                updateGlobalProgress();
-                
-            }, 1000);
-            
-            intervals.push(interval);
-        }
-
-        function updatePlayerUI(player) {
-            const timeElement = document.getElementById(`time-${player.index}`);
-            const progressElement = document.getElementById(`progress-${player.index}`);
-            
-            if (timeElement) {
-                const percent = Math.floor((player.currentTime / VIDEO_DURATION) * 100);
-                timeElement.innerHTML = `${IPS[player.index].pais} • ${formatTime(player.currentTime)} / 5:39`;
-                progressElement.textContent = `⏳ ${percent}%`;
-            }
-        }
-
-        function updateGlobalProgress() {
-            // Média do progresso de todos players
-            const avgProgress = players.reduce((acc, p) => acc + (p.currentTime / VIDEO_DURATION), 0) / PLAYER_COUNT * 100;
-            document.getElementById('globalProgressBar').style.width = `${avgProgress}%`;
-            document.getElementById('globalProgressText').textContent = `${Math.floor(avgProgress)}%`;
-        }
-
-        function restartAllPlayers() {
-            // Reinicia todos os iframes
-            for (let i = 0; i < PLAYER_COUNT; i++) {
-                const iframe = document.getElementById(`player-${i}`);
-                const youtubeUrl = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0&loop=1&playlist=${VIDEO_ID}&t=${Date.now()}_${i}`;
-                iframe.src = youtubeUrl;
-                
-                // Reinicia contadores
-                players[i].currentTime = 0;
-            }
-            
-            document.getElementById('statusMessage').innerHTML = '🔄 REINICIANDO TODOS OS PLAYERS';
-            setTimeout(() => {
-                document.getElementById('statusMessage').innerHTML = '🔴 Rodando em loop infinito • 5:39 cada';
-            }, 2000);
-        }
-
-        function syncPlayers() {
-            // Tenta sincronizar todos os players (recarregando juntos)
-            restartAllPlayers();
-        }
-
-        // Event listeners
-        document.getElementById('restartAllBtn').addEventListener('click', restartAllPlayers);
-        document.getElementById('syncBtn').addEventListener('click', syncPlayers);
-
-        // Inicialização
-        window.addEventListener('load', () => {
-            initializePlayers();
-            
-            // Auto click para ajudar autoplay
-            setTimeout(() => document.body.click(), 1000);
-            
-            // Mensagem inicial
-            document.getElementById('timeDisplay').textContent = '⏱️ 5:39';
-        });
-
-        // Pausa simulação quando a página não está visível (economia de CPU)
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                intervals.forEach(i => clearInterval(i));
-            } else {
-                startTimeSimulation();
-            }
-        });
-
-    })();
+        }, 400);
+    });
 </script>
-
-<!-- RODAPÉ -->
-<div style="text-align: center; margin-top: 20px; color: #666; font-size: 0.8rem;">
-    🎬 Poppy Playtime Chapter 5 • 5 players em loop infinito • Duração: 5:39
-</div>
 
 </body>
 </html>
